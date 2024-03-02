@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Input</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-pzjw8f+ua7Kw1TIq0v8FqFjcJ6pajs/rfdfs3SO+kD4Ck5BdPtF+to8xMmcke49" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .otp-container {
+            width: 28vw;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .otp-input > input {
+            width: 22vw;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            margin: 5px;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            outline: 0;
+            display: flex;
+            
+        }
+        .button{
+            width: 10vw;
+        }
+        .first{
+            width: 100vw;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<form action="/otp" method="post">
+    <div class="first">
+        <div class="otp-container">
+            <h3 class="text-center mb-4">Enter OTP</h3>
+            
+
+                <h6 style="color: red;"><%=locals.msg %></h6> 
+            
+            <div class="otp-input">
+                <input type="text" name="otp" class="form-control"  placeholder="" >
+            </div>
+            <div style="display: flex;justify-content: center;">
+                <button type="submit" class="button">Verify</button>
+            </div>
+            <div>
+                <p id="timer"></p>
+            </div>
+            <p style="font-size: 1.5vw;" class="text-center mb-4">Didn't receive the OTP? <a href="/ResendOtp">Resend Code</a></p>
+        </div>
+    </div>
+</form>
+<div id="timer"></div>
+<script>
+    let remainingTime = localStorage.getItem('remainingTime') || 60; // Time in seconds
+    
+    const timerElement = document.getElementById('timer');
+
+    function updateTimer() {
+        if (remainingTime > 0) {
+            timerElement.textContent = `Time remaining: ${remainingTime} seconds`;
+            remainingTime--;
+            localStorage.setItem('remainingTime', remainingTime);
+        } else {
+            clearInterval(timerInterval);
+            timerElement.textContent = "Time's up!";
+            // Perform any action after the timer ends, like refreshing the OTP
+            localStorage.removeItem('remainingTime');
+        }
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+</script>
+<!-- Add Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSGFpoO/ufreqqF6MVu4JdG7PhIxZlW8sSJv43gkdSHlua9DmM/" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoJtKh7z7lGz7fuP4F8nfdFvAOA6Gg/z6Y5J6XqqyGXYM2ntX5" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js" integrity="sha384-MrFsm+sodUMSWw+KcQgfbdymkU/+IrjNzI5L06febp/Zdnobx93bgs/pMD14Ehdb" crossorigin="anonymous"></script>
+
+</body>
+</html>
