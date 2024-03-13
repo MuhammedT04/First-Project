@@ -27,23 +27,19 @@ const sePassword = async (password) => {
     try {
         const email=req.body.email
         const admin= await model.findOne({email:email})
-        req.session.admin_id=admin._id
+        
         console.log(admin)
         if(admin.is_admin===true){
-            console.log('loooooooooogggggigigiigigigi');
             const pass=await bcrypt.compare(req.body.password,admin.password)
-     console.log(req.body.password);
-            console.log(pass,'iiiiiiiiiiiiiiiiiii')
             if(pass){
-                console.log(pass,'jjjdjdjdjdjdjddjddjdd');
+                req.session.admin_id=admin._id
                 res.redirect('/admin/home')
             }else{
                 res.redirect('/admin/login')
-                console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
             }
         }else{
             res.redirect('/admin/login')
-            console.log('oooooooooooooooooooooooooooooooooooooooooooo')
+
         }
     } catch (error) {
         console.log(error.message)

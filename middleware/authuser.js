@@ -37,7 +37,7 @@ if(user1){
         next()
     }else{
         req.session.destroy()
-        res.redirect('/signUp')
+        res.redirect('/login')
     }
 }else{
     next()

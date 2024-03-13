@@ -108,7 +108,7 @@ const ProductBlock=async(req,res)=>{
         BlockData.status=!BlockData.status
         BlockData.save()
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message)  
     }
 }
 

@@ -19,7 +19,7 @@ app.use(session({
     resave:false,
     saveUninitialized:true
   }))
-  app.use(flash())
+app.use(flash())
 app.use(nocache())
 app.use(express.json())
 
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname,'public')))
 
 app.use('/',router)
 app.use('/admin',adminRouter)
-  
+   
 
 app.listen(PORT,()=>{
   console.log("http://localhost:3000")

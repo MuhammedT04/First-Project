@@ -22,7 +22,7 @@ const sePassword= async (password)=>{
 
 const signUp=async(req,res)=>{
     try {
-        res.render('User/login')
+        res.render('User/signUp')
     } catch (error) {
         console.log(error.message)
     }
@@ -74,19 +74,18 @@ const logindata=async(req,res)=>{
 
         const email=req.body.email
         const emaildata=await model.findOne({email:email})
-        if(emaildata.is_block==true){
-            req.session.user_id=emaildata._id
-          
+        if(emaildata.is_block==true){ 
             const pass=await bcrypt.compare(req.body.password,emaildata.password)
             if(pass){
+                req.session.user_id=emaildata._id
                 res.redirect('/')
             }else{
                 req.flash('msg','password is wrong')
-                res.redirect("/signUp")
+                res.redirect("/login")
             }
         }else{
             req.flash('msg','Email is wrong')
-            res.redirect("/signUp")
+            res.redirect("/login")
         }
         } catch (error) {
         console.log(error.message)
@@ -192,12 +191,26 @@ const otp=async(req,res)=>{
     }
 }
 
+
+function combineOTP(parts){
+    return parts.join("")
+}
+
+
 //otp check and data save 
 
 const otpdata=async(req,res)=>{
     try {
-        const ottp=req.body.otp
-      
+       
+        const otpParts=[
+            req.body.otp1,
+            req.body.otp2,
+            req.body.otp3,
+            req.body.otp4
+             ]
+             const ottp=combineOTP(otpParts)
+             console.log(ottp);
+             if(req.session.otp){
         if(ottp==req.session.otp){
             const fulldata= await model.create({
                 name:req.session.sedata.name,
@@ -216,6 +229,13 @@ const otpdata=async(req,res)=>{
             req.flash('msg','Otp is wrong')
             res.redirect('/otp')
         }
+    }else{
+        if(ottp==req.session.forgetOtp){
+            res.redirect('/confirmpassword')
+        }else{
+            res.redirect('/otp')
+        }
+    }
     } catch (error) {
         console.log(error.message)
     }
@@ -250,8 +270,93 @@ const shop=async(req,res)=>{
 }
 
 
+//forget Password
+
+const forget=async(req,res)=>{
+    try {
+        res.render('User/forgetPassword')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 
+//forget email checking
+
+const EmailChecking=async(req,res)=>{
+    try {
+        const {email}=req.body
+        const emailCheck=await model.findOne({email:email})
+        if(emailCheck){
+            req.session.email=email
+            req.session.forgetOtp=generateOTP()
+            console.log( req.session.forgetOtp);
+            verifyemail('forget Password',email,req.session.forgetOtp)
+            res.redirect('/otp')
+        }else{
+            res.redirect('/forget')
+        }
+    
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+
+
+//forget Resend Otp
+
+const forgetResendOtp=async(req,res)=>{
+    try {
+        req.session.forgetOtp=undefined
+        console.log(req.session.forgetOtp);
+        if(req.session.forgetOtp==undefined){
+            req.session.forgetOtp=generateOTP()
+            console.log( req.session.forgetOtp);
+            verifyemail('forget Password Resend Otp',email,req.session.forgetOtp)
+            res.redirect('/otp')
+        }else{
+            res.redirect('/otp')
+        }
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+
+
+//ConfirmPassword
+
+const confirm=async(req,res)=>{
+    try {
+        res.render('User/confirmPassword')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+const confirmPassword=async(req,res)=>{
+    try {
+        console.log(req.session.email)
+        const {confirmPass}=req.body
+        const spPassword= await sePassword(confirmPass)
+        if(spPassword){
+            const newPassword=await model.findOneAndUpdate({email:req.session.email},{$set:{password:spPassword}})
+            req.flash('msg','successfully')
+            res.redirect('/login')
+        }else{
+            req.redirect('/confirmpassword')
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 module.exports={
     signUp,
@@ -264,5 +369,9 @@ module.exports={
     otpdata,
     resendOtp,
     SingleProduct,
-    shop
+    shop,
+    forget,
+    EmailChecking,
+    confirm,
+    confirmPassword
 }

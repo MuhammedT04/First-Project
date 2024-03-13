@@ -1,0 +1,112 @@
+.main{
+    height: 53vh;
+}
+.nav-item{
+    height: 4vw;
+    border: 0cap;
+    border-bottom: 1px;
+    border-style: solid ;
+}
+.nav-item>a{
+    color: rgb(136, 65, 65);
+}
+.first{
+    padding: 4rem;
+}
+
+.user-profile{
+
+background-color: white;
+height: 40vh;
+border-radius: 20px;
+}
+.user-profile>input{
+    border: 1px;
+    border-style: solid;
+    border-color: rgb(188, 28, 28);
+}
+.button{
+    background-color: rgb(39, 38, 38);
+    width: 5rem;
+    color: white;
+    height: 2rem;
+    border-radius: 20px;
+}
+.orders{
+    background-color: white;
+    height: auto;
+    display: flex;
+    
+    padding: 2rem;
+}
+.orders-di{
+    width: 80vw;
+    height: 30vh;
+    background-color: rgb(233, 233, 233);
+    display: flex;
+    border-radius: 20px;
+    
+}
+.addres{
+    width: 100%;
+    padding-left: 2rem;
+    height:auto ;
+    background-color: rgb(214, 214, 214);
+    overflow: hidden;
+   
+}
+
+.order-full{
+    width: 100%;
+    height: 40vh;
+    background-color: rgb(255, 255, 255);
+}
+.order-image{
+   width: 30vw;
+   height: 35vh; 
+ 
+}
+.name{
+    width: 17vw;
+    height: 6vh;
+   background-color: rgba(199, 195, 195, 0.683);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.img{
+    border-radius: 20px;
+}
+.text{
+    padding-left: 1rem;
+}
+text>p{
+    color: black;
+}
+.order-goo{
+    width: 70%;
+    height: 40vh;
+    background-color: #8adec2;
+}
+.password{
+    width: 100%;
+    background-color: white;
+    height: 20vw;
+    border-radius: 20px;
+}
+.password2>input{
+    width:30vw ;
+}
+.fullAdd{
+    width: 100%;
+    height: auto;
+    background-color:white;
+
+}
+.addressDe{
+    width: 80%;
+    height: 16vw;
+    border: 1px solid;
+    border-radius: 20px;
+}

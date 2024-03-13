@@ -32,6 +32,11 @@ const  mongoose=require("mongoose");
     },
     googleId:{
         type:String,
-    }
+    },
+    address:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"address"
+    },
+    
  })
  module.exports=mongoose.model('zaraData',user)  
