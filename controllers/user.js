@@ -1,10 +1,25 @@
 const model=require('../model/user')
 const bcrypt=require("bcrypt")
 const nodemailer=require("nodemailer")
-const session=require('express-session')
 const Product=require('../model/product')
 const category=require('../model/category')
-const product = require('../model/product')
+const Cart=require('../model/cart')
+const Wallet=require('../model/wallet')
+const wishlist=require('../model/wishlist')
+
+
+const generatecode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 10; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        code+= characters.charAt(randomIndex);
+    }
+    return code;
+};
+
+
+
 
 //password hash
 const sePassword= async (password)=>{
@@ -22,7 +37,8 @@ const sePassword= async (password)=>{
 
 const signUp=async(req,res)=>{
     try {
-        res.render('User/signUp')
+        const msg=req.flash('msg')
+        res.render('User/signUp',{msg})
     } catch (error) {
         console.log(error.message)
     }
@@ -32,23 +48,49 @@ const signUpData=async(req,res)=>{
     try {
         const spPassword= await sePassword(req.body.password)
         const checkMail = await model.findOne({email:req.body.email})
-        console.log('1234567890-')
         if(!checkMail){
+            // const name = req.body.name;
+            // const nameRegex = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
+        
+            // if (!nameRegex.test(name.trim())) {
+            //     req.flash('msg','Invalid Name Provided');
+            //   res.redirect("/signUp");
+            // }
+
+            // const mobileRegex = /^\d{10}$/;
+            // if (!mobileRegex.test(req.body.phone)) {
+            //     req.flash('msg','Invalid Mobile Number Povided');
+            //   return res.redirect("/signUp");
+            // }
+        
+
+            // const email = req.body.email;
+            // const emailRegex = /^[A-Za-z0-9.%+-]+@gmail\.com$/;
+            // if (!emailRegex.test(email)) {
+            //     req.flash('msg','Invalid Email Provided');
+            //   res.redirect('/signUp');
+            // }
+
 
             const data= new model({
                 name:req.body.name,
                 phone:req.body.phone,
                 email:req.body.email,
                 password:spPassword,
+                refferalId:generatecode(),
+                refferalCodeSave:req.body.refferal
             })
+            
             req.session.sedata=data
             req.session.otp=generateOTP()
             console.log( req.session.otp);
             verifyemail(req.body.name,req.body.email,req.session.otp)
             console.log(req.session.sedata);
-            res.redirect('/otp')
+            let timer = Date.now()
+            req.session.time = timer
+            res.redirect(`/otp?time=${timer}`)
         }else{
-            res.render("User/login",{message:"the email is already exist"})
+            res.render("User/signUp",{message:"the email is already exist"})
         }
     } catch (error) {
         console.log(error.message)
@@ -97,10 +139,11 @@ const logindata=async(req,res)=>{
 const home=async(req,res)=>{
     try {
         
-        const productData=await Product.find({status:true})
         const userss=req.session.user_id
+        const productData=await Product.find({status:true}).populate({path:'category', match: { status: true }});
         if(userss){
-            res.render('User/index',{product:productData,User:userss}) 
+            const wish = await wishlist.findOne({ UserId: userss })
+            res.render('User/index',{product:productData,User:userss,wish})
         }else{
             res.render('User/index',{product:productData})
         }
@@ -125,6 +168,8 @@ const logout=async(req,res)=>{
 const generateOTP = () => {
     return Math.floor(1000 + Math.random() * 9000);
 };
+
+
 
 
 //verifyemail
@@ -167,12 +212,11 @@ console.log(name,email,otp);
 const resendOtp=async(req,res)=>{
     try {
         req.session.otp=undefined
-        console.log(req.session.otp)
         if(req.session.otp===undefined){
             req.session.otp= generateOTP()
             console.log(req.session.otp)
             verifyemail(req.session.sedata.name,req.session.sedata.email, req.session.otp)
-            res.redirect('/otp')
+            res.redirect(`/otp?time=${req.session.time}`)
         }
     } catch (error) {
         console.log(error.message)
@@ -199,47 +243,75 @@ function combineOTP(parts){
 
 //otp check and data save 
 
-const otpdata=async(req,res)=>{
+const otpdata = async (req, res) => {
     try {
-       
-        const otpParts=[
+        let checkReffealCode;
+
+        const otpParts = [
             req.body.otp1,
             req.body.otp2,
             req.body.otp3,
             req.body.otp4
-             ]
-             const ottp=combineOTP(otpParts)
-             console.log(ottp);
-             if(req.session.otp){
-        if(ottp==req.session.otp){
-            const fulldata= await model.create({
-                name:req.session.sedata.name,
-                phone:req.session.sedata.phone,
-                email:req.session.sedata.email,
-                password:req.session.sedata.password
-            })
-            if(fulldata){
-                req.session.user_id=fulldata._id
-                res.redirect('/')
-            }else{
-                res.redirect('/signUp')
+        ];
+        const ottp = combineOTP(otpParts);
+        console.log(ottp);
+
+        if (req.session.otp) {
+            if (ottp == req.session.otp) {
+                if (req.session.sedata.refferalCodeSave) {
+                    checkReffealCode = await model.findOne({ refferalId: req.session.sedata.refferalCodeSave });
+
+                    console.log(checkReffealCode);
+
+                    if (checkReffealCode) {
+                    
+                        await Wallet.findOneAndUpdate({ UserId: checkReffealCode._id }, { $inc: { balance: 100 }, $push: { transaction: { amount: 100, creditOrDebit: 'credit' } } }, { upsert: true, new: true });
+                    } 
+                }
+
+                const fulldata = await model.create({
+                    name: req.session.sedata.name,
+                    phone: req.session.sedata.phone,
+                    email: req.session.sedata.email,
+                    password: req.session.sedata.password,
+                    refferalId: req.session.sedata.refferalId,
+                    refferalCodeSave: req.session.sedata.refferalCodeSave
+                });
+
+                if (fulldata) {
+                    if (checkReffealCode) {
+                        console.log('Updating wallet for user');
+                        await Wallet.findOneAndUpdate({ UserId: fulldata._id }, { $inc: { balance: 100 }, $push: { transaction: { amount: 100, creditOrDebit: 'credit' } } }, { upsert: true, new: true });
+                    }
+
+                    req.session.user_id = fulldata._id;
+                    return res.redirect('/');
+                } else {
+                    return res.redirect('/signUp');
+                }
+            } else {
+                req.flash('msg', 'Otp is wrong');
+                return res.redirect(`/otp?time=${req.session.time}`);
             }
-         
-        }else{
-            req.flash('msg','Otp is wrong')
-            res.redirect('/otp')
+        } else {
+       
+            if (ottp == req.session.forgetOtp) {
+             
+                return res.redirect('/confirmpassword');
+            } else {
+                return res.redirect('/otp');
+            }
         }
-    }else{
-        if(ottp==req.session.forgetOtp){
-            res.redirect('/confirmpassword')
-        }else{
-            res.redirect('/otp')
-        }
-    }
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
+        return res.status(500).send("Internal Server Error");
     }
-}
+};
+
+
+
+
+
 
 
 //single Product
@@ -247,12 +319,22 @@ const otpdata=async(req,res)=>{
 const SingleProduct=async(req,res)=>{
     try {
         const Id=req.query.id
+        if(Id.length!==24){
+            return   res.redirect('/404')
+        }
         const singleData=await Product.findOne({_id:Id}).populate('category')
-        const  recom=await product.find({_id:{$ne:Id}})
+        console.log(singleData.category._id,'singleData.category');
+        if(!singleData){
+            return   res.redirect('/404')
+        }
+        const  recom=await Product.find({_id:{$ne:Id},category:singleData.category._id}).populate('category')
+        console.log(recom,"recom");
+            res.render('User/product',{Data:singleData,recom})
+       
 
-        res.render('User/product',{Data:singleData,recom})
+       
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 }
 
@@ -260,10 +342,117 @@ const SingleProduct=async(req,res)=>{
 //shop
 
 
-const shop=async(req,res)=>{
+const shop = async (req, res) => {
     try {
-        const shopProduct=await product.find({status:true})
-        res.render("User/shop",{Data:shopProduct})
+        
+        const limit = 12;
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * limit;
+
+        const totalProductCount = await Product.countDocuments({ status: true });
+        const totalPages = Math.ceil(totalProductCount / limit);
+
+        let shopProducts = await Product.aggregate([
+            { 
+                $match: { status: true } 
+            },
+            {
+                $lookup: {
+                    from: "categories", 
+                    localField: "category",
+                    foreignField: "_id",
+                    as: "category"
+                }
+            },
+            {$unwind: "$category"},{$match: { "category.status": true }},{$skip: skip},{  $limit: limit}
+        ]);
+
+
+
+        let noItems=false;
+        if(req.query.search){
+            const payload=req.query.search.trim()
+            const content= new RegExp(`.*${payload}.*`,'i')
+            shopProducts = await Product.find({
+                $and: [
+                    {
+                        $or: [
+                            { name: { $regex: content } },
+                            { description: { $regex: content } }
+                        ]
+                    },
+                    { status: true }
+                ]
+            }).populate('category').exec();
+        }
+        if(shopProducts.length===0){
+            noItems=true
+        }
+
+       
+        if (req.session.user_id) {
+            const wish = await wishlist.findOne({ UserId: req.session.user_id })
+            res.render("User/shop", { currentPage: page, totalPages, shopProducts ,wish});
+        } else {
+            res.render("User/shop", { currentPage: page, totalPages, shopProducts });
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Internal Server Error");
+    }
+};
+
+
+
+const lowToHigh = async (req, res) => {
+    try {
+        const limit = 8;
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * limit;
+
+        const totalProductCount = await Product.countDocuments({ status: true });
+        const totalPages = Math.ceil(totalProductCount / limit);
+
+        const option = req.params.id == 'HighToLow' ? { price: -1 } : req.params.id == 'Alphabetic' ? { name: 1 } : req.params.id == 'LowToHigh' ? { price: 1 } : req.params.id == 'AlphabeticLow' ? { name: -1 } : { name: -1 };
+        const shopProduct = await Product.find({ status: true }).populate({ path: 'category', match: { status: true } }).sort(option).skip(skip).limit(limit);
+        
+        res.render("User/shop", { shopProducts: shopProduct, totalPages: totalPages, currentPage: page });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("Internal Server Error");
+    }
+}
+
+
+
+
+const Types=async(req,res)=>{
+    try {
+       const data=await Product.aggregate([
+        {
+            $match: {
+              status: true,  
+            },
+        },
+        {
+          $lookup: { 
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "category",
+          },
+        },{
+
+            $unwind: "$category",
+
+        },{
+            $match:{
+                'category.name': req.params.id
+            }
+        }
+    ]);
+
+        res.render("User/shop", {  shopProducts : data });
     } catch (error) {
         console.log(error.message)
     }
@@ -358,6 +547,45 @@ const confirmPassword=async(req,res)=>{
     }
 }
 
+
+
+//404
+
+const user404=async(req,res)=>{
+    try {
+        res.render('user/404')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+//Blog
+
+
+const Blog=async(req,res)=>{
+    try {
+        res.render('user/blog')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+//Contact
+
+
+const contact=async(req,res)=>{
+    try {
+        res.render('user/contact')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
 module.exports={
     signUp,
     signUpData,
@@ -370,8 +598,13 @@ module.exports={
     resendOtp,
     SingleProduct,
     shop,
+    lowToHigh,
+    Types,
     forget,
     EmailChecking,
     confirm,
-    confirmPassword
+    confirmPassword,
+    user404,
+    Blog,
+    contact,
 }

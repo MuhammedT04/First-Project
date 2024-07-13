@@ -1,515 +1,90 @@
+<%- include('../layouts/user/lyHeader.ejs') %>
 
-<!doctype html>
-<html class="no-js" lang="en">
-	
-<!-- Mirrored from template.hasthemes.com/hurst-v1/hurst/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Feb 2024 06:47:39 GMT -->
-<head>
-		<meta charset="utf-8">
-		<meta http-equiv="x-ua-compatible" content="ie=edge">
-		<title>Shopping Cart || Hurst</title>
-		<meta name="description" content="Hurst – Furniture Store eCommerce HTML Template is a clean and elegant design – suitable for selling flower, cookery, accessories, fashion, high fashion, accessories, digital, kids, watches, jewelries, shoes, kids, furniture, sports….. It has a fully responsive width adjusts automatically to any screen size or resolution.">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .se:hover {
 
-		<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-		<!-- Place favicon.ico in the root directory -->
-		
-		<!-- Google Font -->
-		<link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
-		<link href='https://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
+            background-color: rgb(239, 239, 239);
+        }
 
-		<!-- all css here -->
-		<!-- bootstrap v3.3.6 css -->
-		<link rel="stylesheet" href="/css/bootstrap.min.css">
-		<!-- animate css -->
-		<link rel="stylesheet" href="/css/animate.min.css">
-		<!-- jquery-ui.min css -->
-		<link rel="stylesheet" href="/css/jquery-ui.min.css">
-		<!-- meanmenu css -->
-		<link rel="stylesheet" href="/css/meanmenu.min.css">
-		<!-- nivo-slider css -->
-		<link rel="stylesheet" href="/lib/css/nivo-slider.css">
-		<link rel="stylesheet" href="/lib/css/preview.css">
-		<!-- slick css -->
-		<link rel="stylesheet" href="/css/slick.min.css">
-		<!-- lightbox css -->
-		<link rel="stylesheet" href="/css/lightbox.min.css">
-		<!-- material-design-iconic-font css -->
-		<link rel="stylesheet" href="/css/material-design-iconic-font.css">
-		<!-- All common css of theme -->
-		<link rel="stylesheet" href="/css/default.css">
-		<!-- style css -->
-		<link rel="stylesheet" href="/css/style.min.css">
-        <!-- shortcode css -->
-        <link rel="stylesheet" href="/css/shortcode.css">
-		<!-- responsive css -->
-		<link rel="stylesheet" href="/css/responsive.css">
-        
-      
-		<!-- modernizr css -->
-		<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-	</head>
-	<body>
-     <style>
-        .se:hover{
-      
-             background-color:rgb(239, 239, 239) ;  
-          }
-          .se:active{
+        .se:active {
             background-color: rgb(211, 211, 211);
-          }
-     </style>   
-        
+        }
+    </style>
 
 
-      
-<!-- Button trigger modal -->
+    <!-- Address add -->
 
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Choses</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" >
-  
-                <% for(let i=0;i<add.address.length;i++){ %>
-                   <% if(add.address[i].status==false){ %>
-            <div class=" mt-3 m-lg-3" data-bs-dismiss="modal" onclick="news('<%=add.address[i]._id%>')" style="width: 92%;">
-                <div class=" se p-3 " style="width: 100;height: 12vw;box-shadow:1px 1px 8px 0px #888888;">
-                 
-                    <div>
-                        <p><span style="font-size: 1.4vw;"><%=add.address[i].name%></span></p>
-                        <p><span><%=add.address[i].place%></span>,
-                            <br><span><%=add.address[i].locality%>,</span>
-                            <span><%=add.address[i].city%></span>
-                            <span><%=add.address[i].state%>,</span>
-                            <span><%=add.address[i].pincode%> </span>
-                            <br>
-                            <span>Phone: <%=add.address[i].phone%> </span>
-
-                        </p>
-                    </div>
+    <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ExampleModalLabel">Add Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </div>
-            <% } %>
-            <% } %>
-        
-            </div>
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" >Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
+                <div class="modal-body">
+                    <!-- <div class="tab-pane fade" id="account-info" role="tabpanel"> -->
+                    <div class="myaccount-content p-4">
+                        <div class="account-details-form">
+                            <form id="MyAddress" action="/address" method="post">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="single-input-item">
+                                            <label for="first-name" class="required">Name <span>*</span></label>
+                                            <input type="text" name="name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="last-name" class="required" placeholder="Enter Phone no.">Mobile
+                                                Number <span>*</span></label>
+                                            <input type="text" name="phone" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="last-name" class="required"
+                                                placeholder="Enter locality">locality <span>*</span></label>
+                                            <input type="text" name="locality" />
+                                        </div>
+                                    </div>
 
 
+                                    <div class="col-lg-6">
+                                        <div class=" single-input-item">
+                                            <label for="first-name" class="required"
+                                                placeholder="Enter Postal code">Pincode <span>*</span></label>
+                                            <input type="text" name="pincode" />
+                                        </div>
+                                    </div>
 
-
-
-		<!-- WRAPPER START -->
-		<div class="wrapper bg-dark-white">
-
-			<!-- HEADER-AREA START -->
-			<header id="sticky-menu" class="header header-2">
-				<div class="header-area">
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-md-4 offset-md-4 col-7">
-								<div class="logo text-md-center">
-									<a href="index.html"><img src="img/logo/logo.png" alt="" /></a>
-								</div>
-							</div>
-							<div class="col-md-4 col-5">
-								<div class="mini-cart text-end">
-									<ul>
-										<li>
-											<a class="cart-icon" href="#">
-												<i class="zmdi zmdi-shopping-cart"></i>
-												<span>3</span>
-											</a>
-											<div class="mini-cart-brief text-left">
-												<div class="cart-items">
-													<p class="mb-0">You have <span>03 items</span> in your shopping bag</p>
-												</div>
-												<div class="all-cart-product clearfix">
-													<div class="single-cart clearfix">
-														<div class="cart-photo">
-															<a href="#"><img src="img/cart/1.jpg" alt="" /></a>
-														</div>
-														<div class="cart-info">
-															<h5><a href="#">dummy product name</a></h5>
-															<p class="mb-0">Price : $ 100.00</p>
-															<p class="mb-0">Qty : 02 </p>
-															<span class="cart-delete"><a href="#"><i class="zmdi zmdi-close"></i></a></span>
-														</div>
-													</div>
-													<div class="single-cart clearfix">
-														<div class="cart-photo">
-															<a href="#"><img src="img/cart/2.jpg" alt="" /></a>
-														</div>
-														<div class="cart-info">
-															<h5><a href="#">dummy product name</a></h5>
-															<p class="mb-0">Price : $ 300.00</p>
-															<p class="mb-0">Qty : 01 </p>
-															<span class="cart-delete"><a href="#"><i class="zmdi zmdi-close"></i></a></span>
-														</div>
-													</div>
-												</div>
-												<div class="cart-totals">
-													<h5 class="mb-0">Total <span class="floatright">$500.00</span></h5>
-												</div>
-												<div class="cart-bottom  clearfix">
-													<a href="cart.html" class="button-one floatleft text-uppercase" data-text="View cart">View cart</a>
-													<a href="checkout.html" class="button-one floatright text-uppercase" data-text="Check out">Check out</a>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- MAIN-MENU START -->
-				<div class="menu-toggle menu-toggle-2 hamburger hamburger--emphatic d-none d-md-block">
-					<div class="hamburger-box">
-						<div class="hamburger-inner"></div>
-					</div>
-				</div>
-				<div class="main-menu  d-none d-md-block">
-<nav>
-						<ul>
-							<li><a href="index.html">home</a>
-								<div class="sub-menu menu-scroll">
-									<ul>
-										<li class="menu-title">Page's</li>
-										<li><a href="index.html">Home Version 1</a></li>
-										<li><a href="index-2.html">Home Version 2</a></li>
-									</ul>
-								</div>
-							</li>
-							<li><a href="shop.html">products</a>
-								<div class="mega-menu menu-scroll">
-									<div class="table">
-										<div class="table-cell">
-											<div class="half-width">
-												<ul>
-													<li class="menu-title">best brands</li>
-													<li><a href="#">henning koppel</a></li>
-													<li><a href="#">jehs + Laub</a></li>
-													<li><a href="#">vicke lindstrand</a></li>
-													<li><a href="#">don chadwick</a></li>
-													<li><a href="#">akiko kuwahata</a></li>
-													<li><a href="#">barbro berlin</a></li>
-													<li><a href="#">cecilia hall</a></li>
-													<li><a href="#">don chadwick</a></li>
-												</ul>
-											</div>
-											<div class="half-width">
-												<ul>
-													<li class="menu-title">popular brands</li>
-													<li><a href="#">akiko kuwahata</a></li>
-													<li><a href="#">barbro berlin</a></li>
-													<li><a href="#">cecilia hall</a></li>
-													<li><a href="#">don chadwick</a></li>
-													<li><a href="#">henning koppel</a></li>
-													<li><a href="#">jehs + Laub</a></li>
-													<li><a href="#">vicke lindstrand</a></li>
-													<li><a href="#">don chadwick</a></li>
-												</ul>
-											</div>
-											<div class="full-width">
-												<div class="mega-menu-img">
-													<a href="single-product.html"><img src="img/megamenu/1.jpg" alt="" /></a>
-												</div>
-											</div>
-											<div class="pb-80"></div>
-										</div>
-									</div>
-								</div>
-							</li>
-                            <li><a href="#">Shortcodes</a>
-                                <div class="sub-menu menu-scroll">
-                                    <ul>
-                                        <li class="menu-title">Shortcodes</li>
-                                        <li><a href="elements-accordions.html">Accordion</a></li>
-                                        <li><a href="elements-toggles.html">Toggles</a></li>
-                                        <li><a href="elements-tab.html">Tab</a></li>
-                                        <li><a href="elements-product-tab.html">Product Tab</a></li>
-                                        <li><a href="elements-product-tab-2.html">Product Tab 2</a></li>
-                                        <li><a href="elements-carousel.html">product carousel</a></li>
-                                        <li><a href="elements-carousel-2.html">product carousel 2</a></li>
-                                        <li><a href="elements-featured-product.html">Featured Product</a></li>
-                                        <li><a href="elements-featured-product-2.html">Featured Product 2</a></li>
-                                        <li><a href="elements-button.html">Button</a></li>
-                                        <li><a href="elements-table.html">Table</a></li>
-                                        <li><a href="elements-progress-bars.html">Progress Bar</a></li>
-                                        <li><a href="elements-blog.html">Blog</a></li>
-                                        <li><a href="elements-blog-2.html">Blog - 2</a></li>
-                                        <li><a href="elements-team.html">Team</a></li>
-                                        <li><a href="elements-footer.html">Footer</a></li>
-                                        <li><a href="elements-footer-2.html">Footer 2</a></li>
-                                        <li><a href="elements-map.html">Map</a></li>
-                                    </ul>
                                 </div>
-                            </li>
-							<li><a href="shop-sidebar.html">accesories</a></li>
-							<li><a href="shop-list.html">lookbook</a></li>
-							<li><a href="blog.html">blog</a></li>
-							<li><a href="#">pages</a>
-								<div class="sub-menu menu-scroll">
-									<ul>
-										<li class="menu-title">Page's</li>
-										<li><a href="shop.html">Shop</a></li>
-										<li><a href="shop-sidebar.html">Shop Sidebar</a></li>
-										<li><a href="shop-grid-right-sidebar.html">Shop Right Sidebar</a></li>
-										<li><a href="shop-list.html">Shop List</a></li>
-										<li><a href="shop-list-right-sidebar.html">Shop List right sidebar</a></li>
-										<li><a href="single-product.html">Single Product</a></li>
-										<li><a href="single-product-sidebar.html">Single Product Sidebar</a></li>
-										<li><a href="cart.html">Shopping Cart</a></li>
-										<li><a href="wishlist.html">Wishlist</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
-										<li><a href="order.html">Order</a></li>
-										<li><a href="login.html">login / Registration</a></li>
-										<li><a href="my-account.html">My Account</a></li>
-										<li><a href="404.html">404</a></li>
-										<li><a href="blog.html">Blog</a></li>
-										<li><a href="single-blog.html">Single Blog</a></li>
-										<li><a href="single-blog-sidebar.html">Single Blog Sidebar</a></li>
-										<li><a href="about.html">About Us</a></li>
-										<li><a href="contact.html">Contact</a></li>
-									</ul>
-								</div>
-							</li>
-							<li><a href="about.html">about us</a></li>
-							<li><a href="contact.html">contact</a></li>
-						</ul>
-					</nav>
-				</div>
-				<!-- MAIN-MENU END -->
-			</header>
-            <div class="heading-banner-area overlay-bg">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="heading-banner">
-								<div class="heading-banner-title">
-									<h2>Check Out</h2>
-								</div>
-								<div class="breadcumbs pb-15">
-									<ul>
-										<li><a href="/cart">Shopping Cart</a></li>
-										<li>Check Out</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
-	<!-- check-out start -->
-
-    <div class="tab-pane active" id="check-out" style="height: 33vh;">
-
-       <% if(!locals.addres || locals.addres.address.length==0){ %>
-
-        <form action="/address" method="post">
-            <h5 class="text-dark "> <%=locals.msg %></h5> 
-            <div class="shop-cart-table check-out-wrap">
-                <div class="row d-flex justify-content-center ">
-                    <div class="col-md-6">
-                        <div class="billing-details pr-20">
-                            <h4 class="title-1 title-border text-uppercase mb-30">billing details</h4>
-                            <input type="text" name="name" placeholder="Your name here...">
-                            <input type="text" name="phone" placeholder="Phone here...">
-                            <input type="text" name="locality" placeholder="Locality here...">
-                            <input type="text" name="pincode" placeholder="Pincode here...">
-                            <input type="text" name="city" placeholder="City here...">
-                            <input type="text" name="state" placeholder="State here...">
-                            <!-- <select class="custom-select mb-15">
-                                <option>Contry</option>
-                                <option>Bangladesh</option>
-                                <option>United States</option>
-                                <option>united Kingdom</option>
-                                <option>Australia</option>
-                                <option>Canada</option>
-                            </select> -->
-                            <!-- <select class="custom-select mb-15" name="state">
-                                <option>State</option>
-                                <option>Dhaka</option>
-                                <option>New York</option>
-                                <option>London</option>
-                                <option>Melbourne</option>
-                                <option>Ottawa</option>
-                            </select>
-                            <select class="custom-select mb-15" name="city">
-                                <option>Town / City</option>
-                                <option>Dhaka</option>
-                                <option>New York</option>
-                                <option>London</option>
-                                <option>Melbourne</option>
-                                <option>Ottawa</option>
-                            </select> -->
-                            <textarea class="custom-textarea" name="place" placeholder="Your address here..." ></textarea>
-                        </div>
-                        <div>
-                            <button class="button-one submit-button mt-15" data-text="submit" type="submit">Submit</button>		
-                        </div>
-                    </div>
-                </form>	
-
-                   <% }else{ %>
-                    <% console.log(add.address); %>
-                   
-                    <% for(let i=0;i<add.address.length;i++){ %>
-                        <% if(add.address[i].status==true){ %>
-                            <div class="row d-flex justify-content-center ">
-                    <div id="adress" class="fullAdd col-md-10  " style="width: 65%;">
-                        <div class=" p-3 " style="width: 80%;height: 13vw;box-shadow:1px 1px 8px 0px #888888;">
-                            <div class="justify-content-end d-flex ">
-                                <button  class="btn btn-white  border-0" data-bs-toggle="modal" data-bs-target="#exampleModal"  type="button">Change</button>
-                            </div>
-                            <div >
-                                <p><span style="font-size: 1.4vw;"><%=add.address[i].name%></span></p>
-                                <p><span><%=add.address[i].place%></span>,
-                                    <br><span><%=add.address[i].locality%>,</span>
-                                    <span><%=add.address[i].city%>,</span>
-                                    <span><%=add.address[i].state%>,</span>
-                                    <span><%=add.address[i].pincode%> </span>
-                                    <br>
-                                    <span>Phone: <%=add.address[i].phone%> </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                
-                </div>
-                    <% } %>
-                    
-                    <% } %>
-                    
-            </div>
-
-                    <% } %>
-                    </div>
-                    <div class="row d-flex justify-content-center ">
-                    <div class="col-md-10">
-                        <div class="our-order payment-details mt-60 pr-20">
-                            <h4 class=" p-3  title-border text-uppercase mb-30">our order</h4>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th><strong>Product</strong></th>
-                                        <th class="text-end"><strong>Total</strong></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% carts.products.forEach((Data)=>{ %>
-                                      
-                                    <tr>
-                                        <td><%=Data.productId.name%>  x <span><%=Data.quantity%></span></td>
-                                        <td class="text-end">₹<%=Data.totalOfferPrice %>.00</td>
-                                    </tr>
-                                <% }) %>
-                                    <tr>
-                                        <td>Order Total</td>
-                                        <td class="text-end">₹<%=carts.offerTotal%>.00</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- payment-method -->
-                    <div class="col-md-6">
-                        <div class="payment-method mt-60  pl-20">
-                            <h4 class="title-1 title-border text-uppercase mb-30">payment method</h4>
-                            <div class="payment-accordion">
-                                <!-- Accordion start  -->
-                                <!-- <h3 class="payment-accordion-toggle active">Direct Bank Transfer</h3>
-                                <div class="payment-content default">
-                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.</p>
-                                </div>  -->
-                                <!-- Accordion end -->
-                                <!-- Accordion start -->
-                                <!-- <h3 class="payment-accordion-toggle">Cheque Payment</h3>
-                                <div class="payment-content">
-                                    <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                </div> -->
-                                <!-- Accordion end -->
-                                <!-- Accordion start -->
-                                <form action="/order" method="post">
-                                <h3 class="payment-accordion-toggle">Payment</h3>
-                                <div class="payment-content">
-                                    <div class="Cash  ">
-                                        <p class="size text-center ">Cash on Delivery  <span> <input name="cash" checked class="box" type="radio"></span></p>
+                                <div class="  single-input-item">
+                                    <label for="display-name" class="required">Address <span>*</span></label>
+                                    <textarea type="text" cols="60" rows="3" placeholder="Enter full address"
+                                        name="place"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="first-name" class="required" placeholder="Enter City">City
+                                                <span>*</span></label>
+                                            <input type="text" name="city" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="last-name" class="required">State <span>*</span></label>
+                                            <input type="text" name="state" />
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- Accordion end --> 
-                                <button class="button-one submit-button mt-15" data-text="place order" type="submit">place order</button>	
-                            </form>		
-                            </div>															
-                        </div>
-                    </div>
-                </div>
-            </div>
-        										
-    </div>
+                                <div class="single-input-item">
+                                    <button class="btn btn-dark " style="border-radius: 20px;">Save</button>
+                                </div>
 
-<footer>
-    <!-- Footer-area start -->
-    <div class="footer-area footer-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-footer">
-                        <h3 class="footer-title  title-border">Contact Us</h3>
-                        <ul class="footer-contact">
-                            <li><span>Address :</span>28 Green Tower, Street Name,<br>New York City, USA</li>
-                            <li><span>Cell-Phone :</span>012345 - 123456789</li>
-                            <li><span>Email :</span>your-email@gmail.com</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="single-footer">
-                        <h3 class="footer-title  title-border">accounts</h3>
-                        <ul class="footer-menu">
-                            <li><a href="my-account.html"><i class="zmdi zmdi-dot-circle"></i>My Account</a></li>
-                            <li><a href="wishlist.html"><i class="zmdi zmdi-dot-circle"></i>My Wishlist</a></li>
-                            <li><a href="cart.html"><i class="zmdi zmdi-dot-circle"></i>My Cart</a></li>
-                            <li><a href="login.html"><i class="zmdi zmdi-dot-circle"></i>Sign In</a></li>
-                            <li><a href="checkout.html"><i class="zmdi zmdi-dot-circle"></i>Check out</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="single-footer">
-                        <h3 class="footer-title  title-border">shipping</h3>
-                        <ul class="footer-menu">
-                            <li><a href="#"><i class="zmdi zmdi-dot-circle"></i>New Products</a></li>
-                            <li><a href="#"><i class="zmdi zmdi-dot-circle"></i>Top Sellers</a></li>
-                            <li><a href="#"><i class="zmdi zmdi-dot-circle"></i>Manufactirers</a></li>
-                            <li><a href="#"><i class="zmdi zmdi-dot-circle"></i>Suppliers</a></li>
-                            <li><a href="#"><i class="zmdi zmdi-dot-circle"></i>Specials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-footer newsletter-item">
-                        <h3 class="footer-title  title-border">Email Newsletters</h3>
-                        <div class="footer-subscribe">
-                            <form action="#">
-                                <input type="text" name="email" placeholder="Email Address..." />
-                                <button class="button-one submit-btn-4" type="submit" data-text="Subscribe">Subscribe</button>
                             </form>
                         </div>
                     </div>
@@ -517,159 +92,833 @@
             </div>
         </div>
     </div>
-    <!-- Footer-area end -->
-    <!-- Copyright-area start -->
-    <div class="copyright-area copyright-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="copyright">
-                        <p class="mb-0">&copy; <a href="https://themeforest.net/user/codecarnival/portfolio" target="_blank">CodeCarnival </a> 2022. All Rights Reserved.</p>
-                    </div>
+
+
+    <!-- Address Edit -->
+
+
+    <div class="modal fade" id="examplemodal" tabindex="-1" role="dialog" aria-labelledby="examplemodal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="examplemodal">Edit Address</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="col-md-6">
-                    <div class="payment  text-md-end">
-                        <a href="#"><img src="img/payment/1.png" alt="" /></a>
-                        <a href="#"><img src="img/payment/2.png" alt="" /></a>
-                        <a href="#"><img src="img/payment/3.png" alt="" /></a>
-                        <a href="#"><img src="img/payment/4.png" alt="" /></a>
+                <div class="modal-body">
+                    <!-- <div class="tab-pane fade" id="account-info" role="tabpanel"> -->
+                    <div class="myaccount-content p-4">
+                        <div class="account-details-form">
+                            <form action="/CheckOutEditAddress" method="post" id="EditModal">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="single-input-item">
+                                            <label for="first-name" class="required" placeholder="Enter name">Name
+                                                <span>*</span></label>
+                                            <input type="text" id="name1" name="name" />
+                                            <div id="nameError" class="text-danger "></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="last-name" class="required" placeholder="Enter Phone no.">Mobile
+                                                Number <span>*</span></label>
+                                            <input type="text" id="phone" name="phone" />
+                                            <div id="mobileError" class="text-danger "></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="last-name" class="required"
+                                                placeholder="Enter locality">locality <span>*</span></label>
+                                            <input type="text" id="locality" name="locality" />
+                                            <div id="localityError" class="text-danger "></div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class=" single-input-item">
+                                            <label for="first-name" class="required"
+                                                placeholder="Enter Postal code">Pincode <span>*</span></label>
+                                            <input type="text" id="pincode" name="pincode"  />
+                                            <div id="pincodeError" class="text-danger "></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="  single-input-item">
+                                    <label for="display-name" class="required">Address <span>*</span></label>
+                                    <textarea type="text" id="place" rows="3" placeholder="Enter full address"
+                                        name="place" style="width: 32vw;"></textarea>
+                                    <div id="addressError" class="text-danger "></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="first-name" class="required" placeholder="Enter City">City
+                                                <span>*</span></label>
+                                            <input type="text" id="city" name="city" />
+                                            <div id="cityError" class="text-danger "></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="  single-input-item">
+                                            <label for="last-name" class="required">State <span>*</span></label>
+                                            <input type="text" id="state" name="state" />
+                                            <div id="stateError" class="text-danger "></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="single-input-item">
+                                    <button class="btn btn-dark " style="border-radius: 20px;">Save</button>
+                                </div>
+                                <input type="hidden" name="id" id="id">
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Copyright-area start -->
-</footer>
-<!-- FOOTER END -->
-<!-- QUICKVIEW PRODUCT -->
-<div id="quickview-wrapper">
-   <!-- Modal -->
-   <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Choses</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-product">
-                        <div class="product-images">
-                            <div class="main-image images">
-                                <img alt="#" src="img/product/quickview-photo.jpg"/>
-                            </div>
-                        </div><!-- .product-images -->
 
-                        <div class="product-info">
-                            <h1>Aenean eu tristique</h1>
-                            <div class="price-box-3">
-                                <hr />
-                                <div class="s-price-box">
-                                    <span class="new-price">$160.00</span>
-                                    <span class="old-price">$190.00</span>
-                                </div>
-                                <hr />
-                            </div>
-                            <a href="shop.html" class="see-all">See all features</a>
-                            <div class="quick-add-to-cart">
-                                <form method="post" class="cart">
-                                    <div class="numbers-row">
-                                        <input type="number" id="french-hens" value="3" min="1">
+                    <% if (add && add.address && add.address.length> 0) { %>
+                        <% for (let i=0; i < add.address.length; i++) { %>
+                            <% if (add.address[i].status===false) { %>
+                                <!-- Code block -->
+
+                                <div class=" mt-3 m-lg-3" data-bs-dismiss="modal"
+                                    onclick="news('<%=add.address[i]._id%>')" style="width: 92%;">
+                                    <div class=" se p-3 "
+                                        style="width: 100;height: 12vw;box-shadow:1px 1px 8px 0px #888888;">
+
+                                        <div>
+                                            <p><span style="font-size: 1.4vw;">
+                                                    <%=add.address[i].name%>
+                                                </span></p>
+                                            <p><span>
+                                                    <%=add.address[i].place%>
+                                                </span>,
+                                                <br><span>
+                                                    <%=add.address[i].locality%>,
+                                                </span>
+                                                <span>
+                                                    <%=add.address[i].city%>
+                                                </span>
+                                                <span>
+                                                    <%=add.address[i].state%>,
+                                                </span>
+                                                <span>
+                                                    <%=add.address[i].pincode%>
+                                                </span>
+                                                <br>
+                                                <span>Phone: <%=add.address[i].phone%> </span>
+
+                                            </p>
+                                        </div>
                                     </div>
-                                    <button class="single_add_to_cart_button" type="submit">Add to cart</button>
-                                </form>
-                            </div>
-                            <div class="quick-desc">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero.
-                            </div>
-                            <div class="social-sharing">
-                                <div class="widget widget_socialsharing_widget">
-                                    <h3 class="widget-title-modal">Share this product</h3>
-                                    <ul class="social-icons">
-                                        <li><a target="_blank" title="Google +" href="#" class="gplus social-icon"><i class="zmdi zmdi-google-plus"></i></a></li>
-                                        <li><a target="_blank" title="Twitter" href="#" class="twitter social-icon"><i class="zmdi zmdi-twitter"></i></a></li>
-                                        <li><a target="_blank" title="Facebook" href="#" class="facebook social-icon"><i class="zmdi zmdi-facebook"></i></a></li>
-                                        <li><a target="_blank" title="LinkedIn" href="#" class="linkedin social-icon"><i class="zmdi zmdi-linkedin"></i></a></li>
-                                    </ul>
+                                </div>
+                                <% } %>
+                                    <% } %>
+                                        <% } %>
+
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" >Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+            </div> -->
+        </div>
+    </div>
+    </div>
+
+
+
+
+
+    <!-- WRAPPER START -->
+    <div class="wrapper bg-dark-white">
+
+        <!-- HEADER-AREA START -->
+
+
+        <!-- sidebar-search End -->
+        <!-- HEADER-AREA START -->
+        <%- include('../layouts/user/Header.ejs') %>
+            <!-- HEADER-AREA END -->
+            <!-- Mobile-menu start -->
+            <%- include('../layouts/user/mobile.ejs') %>
+
+                <div class="heading-banner-area position-relative  overlay-bg">
+                    <img src="/image/back.jpg" class="position-absolute object-fit-cover "
+                        style="width: 100%; height: 100%;object-fit: cover; " alt="">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="heading-banner">
+                                    <div class="heading-banner-title">
+                                        <h2>Check Out</h2>
+                                    </div>
+                                    <div class="breadcumbs pb-15">
+                                        <ul>
+                                            <li><a href="/cart">Shopping Cart</a></li>
+                                            <li>Check Out</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div><!-- .product-info -->
-                    </div><!-- .modal-product -->
-                </div><!-- .modal-body -->
-            </div><!-- .modal-content -->
-        </div><!-- .modal-dialog -->
-   </div>
-   <!-- END Modal -->
-</div>
-<!-- END QUICKVIEW PRODUCT -->	
+                        </div>
+                    </div>
+                </div>
 
-</div>
-<!-- WRAPPER END -->
+                <!-- check-out start -->
 
+                <div class="tab-pane active" id="check-out" style="height: 33vh;">
 
-<script>
-    function old(o){
-      
+                    <% if(!locals.addres || locals.addres.address.length==0){ %>
 
-    }
+                        <form action="/address" method="post" id="registerForm">
+                            <h5 class="text-dark ">
+                                <%=locals.msg %>
+                            </h5>
+                            <div class="shop-cart-table check-out-wrap">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-6">
+                                        <div class="billing-details pr-20">
+                                            <h4 class="title-1 title-border text-uppercase mb-30">billing details</h4>
+                                            <input type="text" id="name1" name="name" placeholder="Your name here...">
 
+                                            <input type="text" id="phone1" name="phone" placeholder="Phone here...">
 
-    function news(n){
-        console.log(n,'uuuuuuuuuuuu89');
-        fetch('/adressChange', {
-        method: "POST",
-        headers: {
-        'Content-Type': 'application/json'
-    },
-        body: JSON.stringify({n})
-   })
-   window.location.href = '/checkout';
-    }
+                                            <input type="text" id="locality" name="locality"
+                                                placeholder="Locality here...">
 
+                                            <input type="text" id="pincode" name="pincode"
+                                                placeholder="Pincode here...">
 
+                                            <input type="text" id="city" name="city" placeholder="City here...">
 
-</script>
-
-<style>
-   
-.size{
-    font-size: 1.3rem;
-}
+                                            <input type="text" id="state" name="state" placeholder="State here...">
 
 
+                                            <textarea class="custom-textarea" name="place"
+                                                placeholder="Your address here..."></textarea>
+                                            <span id="placeError" style="color: red;"></span>
+                                        </div>
+                                        <div>
+                                            <button class="button-one submit-button mt-15" id="submitBtn"
+                                                type="submit">Submit</button>
+                                        </div>
+
+                        </form>
+
+                        <% }else{ %>
+                            <div class="d-flex justify-content-between" style="    width: 37vw;margin-left: 43px;">
+                                <div>
+                                    <button class="btn btn-white  border-0 " type="button" data-toggle="modal"
+                                        data-target="#example">
+                                        <i class="ri-add-fill"></i></i>Add
+                                    </button>
+                                </div>
+                                <div>
+
+                                    <button class="btn btn-white  border-0" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal" type="button" style="margin-left: 28px;">Change
+                                        Address</button>
+                                </div>
+                            </div>
+
+                            <% for(let i=0;i<add.address.length;i++){ %>
+                                <% if(add.address[i].status==true){ %>
+
+                                    <div class="fullAdd " style="margin-left: 28px;">
+
+                                        <div class="addressDe p-3 ">
+                                            <div class="d-flex justify-content-center">
+
+
+                                                <div>
+                                                    <p><span>
+                                                            <%=add.address[i].name%>
+                                                        </span></p>
+                                                    <p><span>
+                                                            <%=add.address[i].place%>
+                                                        </span>,<span>
+                                                            <%=add.address[i].locality%>
+                                                        </span>
+                                                        <span>
+                                                            <%=add.address[i].city%>
+                                                        </span>
+                                                        <span>
+                                                            <%=add.address[i].state%>,
+                                                        </span>
+                                                        <span>
+                                                            <%=add.address[i].pincode%>
+                                                        </span>
+                                                        <br>
+                                                        <span>Phone: <%=add.address[i].phone%> </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="justify-content-end d-flex">
+                                                <a class="btn btn-white  border-0  " type="button">
+                                                    <p style="cursor: pointer;" data-toggle="modal"
+                                                        data-target="#examplemodal"
+                                                        onclick="edit('<%=add.address[i]._id%>')"> <i
+                                                            class="ri-edit-2-fill"></i>Edit</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+                                        <% } %>
+
+                </div>
+    </div>
+    <% } %>
+        </div>
+        <div class="row justify-content-end d-flex">
+            <div class="col-md-6 ">
+                <div class="our-order payment-details mt-60 pr-20">
+                    <h4 class="title-1 title-border text-uppercase">our order</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><strong>Product</strong></th>
+                                <th class="text-end"><strong>Total</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let total=0 %>
+                                <% let cartTotal=0%>
+                                    <% let QuantityProduct=false %>
+                                        <% carts.products.forEach((Data)=>{ %>
+                                            <% total=Data.productId.offerPrire*Data.quantity %>
+                                                <% cartTotal=cartTotal+total %>
+
+                                                    <% if(Data.productId.quantity<Data.quantity){ %>
+
+                                                        <% QuantityProduct=true %>
+                                                            <input type="hidden" name="m" value="true"
+                                                                id="quantitycheck">
+                                                            <% } %>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <%=Data.productId.name%> x <span>
+                                                                                <%=Data.quantity%>
+                                                                            </span>
+                                                                    </td>
+                                                                    <td class="text-end">₹<%=total%>.00</td>
+                                                                </tr>
+                                                                <% }) %>
+
+
+                                                                    <tr>
+                                                                        <td>Discount</td>
+                                                                        <td class="text-end" id="discount">₹.00</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Order Total</td>
+                                                                        <td class="text-end" id="total">₹<%=cartTotal%>
+                                                                                .00</td>
+                                                                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-md-6">
+                <div class="customer-login mt-30">
+                    <h4 class="title-1 title-border text-uppercase">coupon discount</h4>
+                    <p class="text-gray">Enter your coupon code if you have one!</p>
+                    <input class="code" type="text" name="coupon" placeholder="Enter your code here.">
+
+                    <button id="clear" type="button" onclick="clear1()"
+                        class="button-one submit-button mt-15">clear</button>
+                    <button id="submit" type="submit" onclick="coupons()" class="button-one submit-button mt-15">apply
+                        coupon</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="payment-method mt-60 pb-20 pl-20">
+                    <h4 class="title-1 title-border text-uppercase mb-30">payment method</h4>
+                    <div class="payment-accordion">
+                        <!-- Accordion start  -->
+                        <!-- <h3 class="payment-accordion-toggle active">Direct Bank Transfer</h3>
+                                    <div class="payment-content default">
+                                        <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.</p>
+                                    </div>  -->
+                        <!-- Accordion end -->
+                        <!-- Accordion start -->
+                        <!-- <h3 class="payment-accordion-toggle">Cheque Payment</h3>
+                                    <div class="payment-content">
+                                        <p>Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                    </div> -->
+                        <!-- Accordion end -->
+                        <!-- Accordion start -->
+                        <form id="orderForm" action="/order" method="post">
+                            <h3 class="payment-accordion-toggle">Payment</h3>
+                            <div class="payment-content">
+                                <div class="Cash  ">
+
+                                    <p id="wallet" class="<%= wallet?.balance>=cartTotal?'d-block':'d-none' %>">
+                                        <span><input name="payment" value="Wallet" class="box" id="online"
+                                                type="radio"></span>Wallet</p>
+
+                                    <p> <span><input name="payment" value="Online Payment" checked class="box"
+                                                id="online" type="radio"></span>UPI</p>
+
+
+                                    <input type="hidden" id="payStatus" name="PayStatus">
+                                    <% if(addres?.address?.length>0){ %>
+                                        <p><span> <input name="payment" value="Cash on Delivery" class="box" id="cod"
+                                                    type="radio">Cash on Delivery </span></p>
+                                        <% }else{ %>
+                                            <p style="display: inline-block;margin-left: 2rem;"> <span> <input
+                                                        name="payment" disabled value="Cash on Delivery" class="box"
+                                                        id="cod" type="radio">Cash on Delivery</span></p>
+                                            <% } %>
+                                </div>
+                            </div>
+                            <!-- Accordion end -->
+                            <button class="button-one submit-button mt-15" type="button"
+                                onclick="submit1('<%=cartTotal%>','<%=carts.clientId%>')">placeorder</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- payment-method -->
 
 
 
-</style>
 
-<!-- all js here -->
-<!-- jquery latest version -->
-<script src="js/vendor/jquery-3.6.0.min.js"></script>
-<script src="js/vendor/jquery-migrate-3.3.2.min.js"></script>
-<!-- bootstrap js -->
-<script src="js/bootstrap.bundle.min.js"></script>
-<!-- jquery.meanmenu js -->
-<script src="js/jquery.meanmenu.js"></script>
-<!-- slick.min js -->
-<script src="js/slick.min.js"></script>
-<!-- jquery.treeview js -->
-<script src="js/jquery.treeview.js"></script>
-<!-- lightbox.min js -->
-<script src="js/lightbox.min.js"></script>
-<!-- jquery-ui js -->
-<script src="js/jquery-ui.min.js"></script>
-<!-- jquery.nivo.slider js -->
-<script src="lib/js/jquery.nivo.slider.js"></script>
-<script src="lib/home.js"></script>
-<!-- jquery.nicescroll.min js -->
-<script src="js/jquery.nicescroll.min.js"></script>
-<!-- countdon.min js -->
-<script src="js/countdon.min.js"></script>
-<!-- wow js -->
-<script src="js/wow.min.js"></script>
-<!-- plugins js -->
-<script src="js/plugins.js"></script>
-<!-- main js -->
-<script src="js/main.min.js"></script>
-</body>
 
-<!-- Mirrored from template.hasthemes.com/hurst-v1/hurst/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 09 Feb 2024 06:47:39 GMT -->
-</html>
+        <%- include('../layouts/user/Footer.ejs') %>
+            <!-- FOOTER END -->
+            <!-- QUICKVIEW PRODUCT -->
+            <div id="quickview-wrapper">
+                <!-- Modal -->
+                <div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-product">
+                                    <div class="product-images">
+                                        <div class="main-image images">
+                                            <img alt="#" src="img/product/quickview-photo.jpg" />
+                                        </div>
+                                    </div><!-- .product-images -->
+
+                                    <div class="product-info">
+                                        <h1>Aenean eu tristique</h1>
+                                        <div class="price-box-3">
+                                            <hr />
+                                            <div class="s-price-box">
+                                                <span class="new-price">$160.00</span>
+                                                <span class="old-price">$190.00</span>
+                                            </div>
+                                            <hr />
+                                        </div>
+                                        <a href="shop.html" class="see-all">See all features</a>
+                                        <div class="quick-add-to-cart">
+                                            <form method="post" class="cart">
+                                                <div class="numbers-row">
+                                                    <input type="number" id="french-hens" value="3" min="1">
+                                                </div>
+                                                <button class="single_add_to_cart_button" type="submit">Add to
+                                                    cart</button>
+                                            </form>
+                                        </div>
+                                        <div class="quick-desc">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue
+                                            nec est
+                                            tristique auctor. Donec non est at libero.
+                                        </div>
+                                        <div class="social-sharing">
+                                            <div class="widget widget_socialsharing_widget">
+                                                <h3 class="widget-title-modal">Share this product</h3>
+                                                <ul class="social-icons">
+                                                    <li><a target="_blank" title="Google +" href="#"
+                                                            class="gplus social-icon"><i
+                                                                class="zmdi zmdi-google-plus"></i></a>
+                                                    </li>
+                                                    <li><a target="_blank" title="Twitter" href="#"
+                                                            class="twitter social-icon"><i
+                                                                class="zmdi zmdi-twitter"></i></a>
+                                                    </li>
+                                                    <li><a target="_blank" title="Facebook" href="#"
+                                                            class="facebook social-icon"><i
+                                                                class="zmdi zmdi-facebook"></i></a>
+                                                    </li>
+                                                    <li><a target="_blank" title="LinkedIn" href="#"
+                                                            class="linkedin social-icon"><i
+                                                                class="zmdi zmdi-linkedin"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <p id="walletAmount" hidden>
+                                                <%=wallet?.balance %>
+                                            </p>
+                                        </div>
+                                    </div><!-- .product-info -->
+                                </div><!-- .modal-product -->
+                            </div><!-- .modal-body -->
+                        </div><!-- .modal-content -->
+                    </div><!-- .modal-dialog -->
+                </div>
+                <!-- END Modal -->
+            </div>
+            <!-- END QUICKVIEW PRODUCT -->
+
+            </div>
+            <!-- WRAPPER END -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script>
+//address add modal
+             const modalAddress=document.getElementById('MyAddress')
+             
+        if(modalAddress){
+            console.log('sjjsjs');
+            modalAddress.addEventListener('submit', function (event) {+
+                console.log('submit');
+                        const flag=validate(modalAddress,6,schema)
+    
+                        if (!flag) {
+                            event.preventDefault();
+                        }
+                    });
+
+
+        }
+
+//address edit modal
+
+                const modalEdit=document.getElementById('EditModal')
+
+                if(modalEdit){
+                            console.log('sjjsjs');
+                            modalEdit.addEventListener('submit', function (event) {+
+                                console.log('submit');
+                                        const flag=validate(modalEdit,6,schema)
+                    
+                                        if (!flag) {
+                                            event.preventDefault();
+                                        }
+                                    });
+
+
+                        }
+
+
+
+
+                const schema = {
+                    name: /^[a-zA-Z]+(?: [a-zA-Z]+)*$/,
+                    phone: /^[0-9]{10}$/,
+                    pincode: /^[0-9]{6}$/
+                }
+                const formSubmit = document.getElementById('registerForm')
+                console.log(formSubmit);
+                if(formSubmit){
+                    formSubmit.addEventListener('submit', function (event) {
+                        const flag=validate(formSubmit,6,schema)
+    
+                        if (!flag) {
+                            event.preventDefault();
+                        }
+                    });
+
+
+                }    
+
+                function validate(el,count,schema){
+                    const inputs = el.querySelectorAll('input');
+                    const submitBtn = document.getElementById('submitBtn');
+                    let flag = true;
+                    inputs.forEach((inp,i) => {
+                       if(i<count){
+                        const val = inp.value.trim();
+                        const name = inp.name;
+                        const test = schema[`${name}`] || { test: () => true }
+                        if (val && test?.test(val)) removeNextElem(inp,name);
+                        else {
+                            createElement(inp, name)
+                            flag = true;
+                            event.preventDefault();  
+                            return
+                        }
+                       }
+                    })
+               return flag
+                }
+
+                function createElement(elem, name) {
+                const next= elem.nextElementSibling
+                if(next?.id!==`${name}22`){
+                    const pTag = document.createElement('p');
+                    pTag.style.color = "red";
+                    pTag.id = `${name}22`
+                    pTag.textContent = `invalid ${name}`;
+                    elem.parentNode.insertBefore(pTag, elem.nextSibling);
+                    elem.style.border = "1px solid red"
+                }
+                }
+
+                function removeNextElem(elem,name) {
+                    console.log('remove');
+                    const nextSibling = elem.nextElementSibling;
+                    elem.style.border = '0px solid '
+                    console.log(nextSibling,name,elem);
+                if (nextSibling?.id==`${name}22`) nextSibling.parentNode.removeChild(nextSibling);
+                }
+
+
+
+
+                const cle = document.getElementById('clear')
+                const to = document.getElementById('total').textContent
+                const submit = document.getElementById('submit')
+                cle.style.display = 'none'
+                const code = document.querySelector('input.code[type="text"][name="coupon"]');
+                let data = localStorage.getItem("coupenId")
+                if (data) {
+                    cle.style.display = 'block';
+                    submit.style.display = 'none';
+                    code.value = data
+                    coupons()
+                }
+                function clear1() {
+                    const discount = document.getElementById('discount')
+                    const total = document.getElementById('total')
+                    total.textContent = to
+                    discount.textContent = 0
+                    code.value = '';
+
+                    cle.style.display = 'none';
+                    submit.style.display = 'block';
+                    localStorage.removeItem('coupenId')
+                    const amount = document.getElementById('walletAmount').textContent
+                    const wallet = document.getElementById('wallet')
+                    if (Number(to) < Number(amount)) {
+                        wallet.classList.remove('d-none')
+
+                    } else wallet.classList.add('d-none')
+                }
+                const form = document.getElementById('orderForm');
+                //   const total=document.querySelectorAll('.text-end')
+                // console.log(total)
+                // let totalPrice= 0
+                // price.forEach(e=>{
+                //   totalPrice+=Number(e.textContent.replace('₹',''))  
+                // })
+
+                function submit1(amount, userId) {
+                    const Radio = document.querySelector('input[name="payment"]:checked');
+
+
+                    if (Radio.value == 'Cash on Delivery') {
+
+                        form.submit()
+                    } else if (Radio.value == 'Wallet') {
+                        form.submit()
+                    } else {
+
+                        razor(amount, userId)
+                    }
+                }
+
+                function razor(amount, userId) {
+                    const paymentStutus = document.getElementById('payStatus')
+                    fetch('/razor', {
+                        method: 'POST',
+                        headers: { 'Content-type': 'application/json' },
+                        body: JSON.stringify({ amount, userId })
+                    }).then(res => res.json()).then(data => {
+                        if (data.succes) {
+
+                            let options = {
+                                "key": `${data.key_id}`,
+                                "amount": `${data.amount}`,
+                                "currency": "INR",
+                                "name": "slayFIt",
+                                "handler": function (response) {
+                                    paymentStutus.value = "Paid"
+                                    form.submit();
+                                },
+                                "profile": {
+                                    "name": `${data.name}`,
+                                    "email": `${data.email}`
+                                }
+                            }
+
+                            let razorpayObject = new Razorpay(options);
+                            razorpayObject.on('payment.failed', (response) => {
+                                alert('payment failed');
+                                paymentStutus.value = "Pending"
+                                form.submit();
+                            });
+                            razorpayObject.open();
+                        } else if (data.fail) {
+                            const Toast = Swal.mixin({
+
+                                toast: true,
+                                position: "bottom",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+
+                                didOpen: (toast) => {
+
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+
+                            });
+
+                            Toast.fire({
+
+                                icon: "warning",
+                                title: "No address",
+                                background: "31363F"
+
+                            })
+                        }
+                    })
+                }
+
+
+                function news(n) {
+                    fetch('/adressChange', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ n })
+                    })
+                    window.location.href = '/checkout';
+                }
+
+
+
+
+                function coupons() {
+                    const amount = document.getElementById('walletAmount').textContent
+                    const discount = document.getElementById('discount')
+                    const wallet = document.getElementById('wallet')
+                    const total = document.getElementById('total')
+                    fetch('/applycoupon', {
+                        method: "post",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ code: code.value })
+                    }).then((data) => (data.json()))
+                        .then((data) => {
+                            if (data) {
+                                cle.style.display = 'block';
+                                submit.style.display = 'none';
+
+                                localStorage.setItem("coupenId", code.value)
+                                discount.textContent = '₹' + data.dis + '.00'
+                                total.textContent = '₹' + data.total + '.00';
+                                console.log(data.total, Number(amount), data.total < Number(amount))
+                                if (data.total < Number(amount)) {
+                                    wallet.classList.remove('d-none')
+
+                                } else wallet.classList.add('d-none')
+                            }
+                        })
+                }
+
+                const quantitycheck = document.getElementById('quantitycheck')?.value;
+
+                if (quantitycheck) {
+
+                    Swal.fire({
+                        title: "Product of stock problem",
+                        text: "",
+                        icon: "error"
+                    }).then(() => {
+                        window.location.href = '/cart';
+                    });
+                }
+
+
+
+                // Address Edit
+
+                function edit(ID) {
+                    const name2 = document.getElementById(`name1`)
+                    const phone2 = document.getElementById(`phone`)
+                    const locality2 = document.getElementById(`locality`)
+                    const pincode2 = document.getElementById(`pincode`)
+                    const city2 = document.getElementById(`city`)
+                    const state2 = document.getElementById(`state`)
+                    const place2 = document.getElementById(`place`)
+                    const id2 = document.getElementById(`id`)
+                    console.log(name2, 'lllllllllll')
+
+                    fetch('/checkOutEdit', {
+                        method: "post",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ID })
+
+                    }).then((res) => res.json())
+                        .then((data) => {
+                            const { name, phone, locality, pincode, place, city, state, _id } = data.checkOutEditData.address[0];
+                            console.log(name, phone, locality, pincode, place, city, state, _id);
+                            name2.value = name
+                            phone2.value = phone
+                            locality2.value = locality
+                            pincode2.value = pincode
+                            city2.value = city
+                            state2.value = state
+                            place2.value = place
+                            id2.value = _id
+                        })
+                }
+
+
+
+
+            </script>
+
+            <style>
+                .size {
+                    font-size: 1.3rem;
+                }
+
+                .addressDe {
+                    width: 40vw;
+                    border-radius: 0 !important;
+
+                }
+            </style>
+
+            <!-- all js here -->
+            <!-- jquery latest version -->
+            <%- include('../layouts/user/lyFooter.ejs') %>

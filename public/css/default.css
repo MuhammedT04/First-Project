@@ -14,7 +14,7 @@
 	color: #999;
 }
 .text-dark-red {
-	color: #c87065;
+	color: #B79BB2;
 }
 .text-black {
 	color: #6a6a6a;
@@ -23,13 +23,13 @@
 	color: #666;
 }
 .text-tan {
-	color: #C8A165;
+	color: #B79BB2;
 }
-.cart-info h5 a, .slider-title2, .slider-title3 {
-  color: #666;
+.cart-info h5  a, .slider-title2, .slider-title3, .slider-title1,.slider-pro-brief   {
+  color: #ffffff;
 }
 .cart-info a:hover {
-  color: #C8A165;
+  color: #B79BB2;
 }
 .single-cart p {
   color: #999;
@@ -41,14 +41,14 @@
   color: #6a6a6a;
 }
 .banner-3 .banner-title a:hover {
-  color: #C8A165;
+  color: #B79BB2;
 }
 .banner-3 .banner-title span {
   color: #c8a165;
 }
 .sidebar-social ul > li:hover a,
 .sidebar-account ul > li:hover a {
-    color: #C8A165;
+    color: #B79BB2;
 }
 .bg-white {
   background: #fff;
@@ -73,7 +73,7 @@
   position: absolute;
   top: 20px;
   z-index: 2;
-  background: #c8a165 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
   border-radius: 5px;
   color: #fff;
   height: 25px;
@@ -82,10 +82,10 @@
   text-transform: capitalize;
 }
 .pro-label.new-label {
-  background: #c8a165 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
 }
 .pro-label.sale-label {
-  background: #c87065 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
 }
 .single-banner .pro-label {
   left: 30px;
@@ -110,7 +110,7 @@
   position: relative;
 }	
 .button-one::before {
-  background: #c8a165 none repeat scroll 0 0;
+  background: #B79BB24c none repeat scroll 0 0;
   bottom: 0;
   color: #fff;
   content: attr(data-text);
@@ -140,10 +140,10 @@
   visibility: visible;
 }	
 .submit-button.btn-bg-2 {
-  background: #C8A165 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
 }
 .submit-button.btn-bg-2::before {
-  background: #c87065 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
 }
 .form-message{
   margin-top: 15px;
@@ -162,13 +162,13 @@
   padding: 0 30px;
 }
 .button-one.style-3 {
-  background: #c87065 none repeat scroll 0 0;
+  background: #e0dddc none repeat scroll 0 0;
   color: #fff;
   font-weight: 700;
   padding: 0 30px;
 }
 .button-one.style-3::after {
-    border: 2px solid #c87065;
+    border: 2px solid #cfbfbd;
 }
 .button-2 {
   font-weight: 700;
@@ -205,7 +205,7 @@
   padding-bottom: 22px;
 }
 .section-title .title-border::before {
-  background: #c87065 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
   margin: 0 auto;
   right: 0;
 }
@@ -255,9 +255,10 @@ button {
   padding: 0 20px 0 0;
 }
 .submit-button {
-  background: #c87065 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
   color: #fff;
   height: 35px;
+  border-radius: 20px;
   line-height: 35px;
   padding: 0 30px;
   text-transform: uppercase;
@@ -301,8 +302,8 @@ button {
   transition: all 0.5s ease 0s;
 }
 .arrow-left-right .slick-arrow:hover {
-  background: #C8A165 none repeat scroll 0 0;
-  border: 2px solid #C8A165;
+  background: #B79BB2 none repeat scroll 0 0;
+  border: 2px solid #B79BB2;
   color: #fff;
 }
 .arrow-left-right .slick-next.slick-arrow {
@@ -327,7 +328,7 @@ button {
   width: 8px;
 }
 .dots-bottom-right .slick-dots li.slick-active {
-    background: #C8A165 none repeat scroll 0 0;
+    background: #B79BB2 none repeat scroll 0 0;
 }
 /* -----------------------------------------------------
 	Margin and Padding
@@ -625,7 +626,7 @@ button {
 /* Tooltip */
 .tooltip {opacity:1 !important;}
 .tooltip > .tooltip-inner {
-  background: #C8A165 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
   border-radius: 3px;
   color: #fff;
   display: inline-block;
@@ -640,7 +641,7 @@ button {
 .product-action a:first-child .tooltip > .tooltip-inner {
   margin-left: 20px;
 }
-.tooltip .tooltip-arrow { border-top-color:#C8A165 !important; }
+.tooltip .tooltip-arrow { border-top-color:#B79BB2 !important; }
 /* Quickview */
 .modal { z-index: 13000;}
 #productModal .modal-dialog {
@@ -745,21 +746,34 @@ button {
   text-align: center;
   width: 60px;
 }
-.quick-add-to-cart .single_add_to_cart_button {
-    background: #444  none repeat scroll 0 0;
-    border: medium none;
-    color: #fff;
+  .single_add_to_cart_button {
+    background-color: #B79BB2;
+    color: #ffffff;
+    width: 7rem;
+    height: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 18px 0px #849595;
+  } 
+
+@media (max-width:480px) {
+  .single_add_to_cart_button {
+    background-color: #B79BB2;
+    color: #ffffff;
+    float: right;
+    transform: translate(.5rem,-2.27rem);
+    border-radius: 1rem;
+    scale: .93;
+    box-shadow: 0px 0px 18px 0px #849595;
+  }
+  .stockOut{
     float: left;
-    font-weight: 700;
-    height: 40px;
-    margin-left: 15px;
-    padding: 0 70px;
-    text-transform: uppercase;
-	transition: all 0.3s ease 0s;
+    transform: translate(-4rem, 1.5rem);
+  }
 }
-.quick-add-to-cart .single_add_to_cart_button:hover {
-    background: #C8A165 none repeat scroll 0 0 !important;
-}
+
+
+
+
 .modal-product .product-info .see-all:hover {
     color: #ff8787;
 }
@@ -855,7 +869,7 @@ h3.widget-title-modal {
 }
 /* Scroll Up */
 #scrollUp {
-  background: #C8A165 none repeat scroll 0 0;
+  background: #B79BB2 none repeat scroll 0 0;
   bottom: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   color: #fff;

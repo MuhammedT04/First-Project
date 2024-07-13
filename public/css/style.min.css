@@ -78,7 +78,7 @@ a {
 }
 
 a:hover {
-    color: #c8a165;
+    color: #B79BB2;
     text-decoration: none
 }
 
@@ -187,7 +187,7 @@ pre {
 }
 
 .cart-icon>span {
-    background: #c87065 none repeat scroll 0 0;
+    background: #B79BB2 none repeat scroll 0 0;
     border: 2px solid #fff;
     border-radius: 50%;
     color: #fff;
@@ -223,7 +223,7 @@ pre {
 }
 
 .cart-items p span {
-    color: #c87065
+    color: #B79BB2
 }
 
 .all-cart-product {
@@ -289,7 +289,7 @@ pre {
 }
 
 .mini-cart ul li:hover .cart-icon {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .menu-toggle {
@@ -329,7 +329,7 @@ pre {
 }
 
 .main-menu>nav>ul>li>a::before {
-    background: #c8a165 none repeat scroll 0 0;
+    background: #B79BB2 none repeat scroll 0 0;
     content: "";
     height: 100%;
     left: -100%;
@@ -349,7 +349,7 @@ pre {
 
 .main-menu ul li .sub-menu {
     background: #fff none repeat scroll 0 0;
-    border-left: 1px solid #c8a165;
+    border-left: 1px solid#B79BB2;
     height: 100%;
     left: 300px;
     padding-top: 172px;
@@ -378,7 +378,7 @@ pre {
 }
 
 .main-menu ul li .sub-menu>ul>li:hover a {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .sub-menu ul li:last-child {
@@ -387,7 +387,7 @@ pre {
 
 .main-menu ul li .mega-menu {
     background: #fff none repeat scroll 0 0;
-    border-left: 1px solid #c8a165;
+    border-left: 1px solid#B79BB2;
     height: 100%;
     left: 300px;
     padding-top: 172px;
@@ -431,7 +431,7 @@ pre {
 }
 
 .half-width>ul>li:hover a {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .mega-menu-img a {
@@ -694,7 +694,7 @@ pre {
 
 .sidebar-search input {
     background: transparent none repeat scroll 0 0;
-    border-bottom: 1px solid #c87065;
+    border-bottom: 1px solid #B79BB2;
     font-size: 16px;
     margin-top: 230px
 }
@@ -715,7 +715,7 @@ pre {
 
 .close-search:hover,
 .search-button:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .product-slider.style-1 {
@@ -797,7 +797,7 @@ pre {
 }
 
 .product-action a:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .product-info {
@@ -818,14 +818,14 @@ pre {
 }
 
 .pro-price {
-    color: #c87065;
+    /* color: #B79BB2; */
     font-size: 18px;
     font-weight: 700;
     line-height: 28px
 }
 
 .pro-rating a {
-    color: #c87065;
+    color: #B79BB2;
     font-size: 15px;
     line-height: 28px
 }
@@ -858,7 +858,7 @@ pre {
 }
 
 .onsale {
-    background: #c87065 none repeat scroll 0 0;
+    background: #B79BB2 none repeat scroll 0 0;
     border-radius: 50%;
     float: left;
     height: 112px;
@@ -984,7 +984,7 @@ pre {
 }
 
 .like-share a:hover {
-    color: #c87065
+    color: #B79BB2
 }
 
 .like-share a:last-child {
@@ -1029,7 +1029,7 @@ pre {
 
 .subscribe input {
     background: transparent none repeat scroll 0 0;
-    border-bottom: 1px solid #c87065;
+    border-bottom: 1px solid #B79BB2;
     margin: 0;
     position: relative;
     top: -4px;
@@ -1051,7 +1051,7 @@ pre {
 }
 
 .footer-title.title-border::before {
-    background: #c87065 none repeat scroll 0 0
+    background: #B79BB2 none repeat scroll 0 0
 }
 
 .footer-contact li {
@@ -1082,7 +1082,7 @@ pre {
 }
 
 .footer-menu li a:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .footer-thumb {
@@ -1096,7 +1096,7 @@ pre {
 }
 
 .footer-thumb>a::before {
-    background: #c8a165 none repeat scroll 0 0;
+    background:#B79BB2 none repeat scroll 0 0;
     content: "";
     height: 100%;
     opacity: .5;
@@ -1193,11 +1193,11 @@ pre {
     opacity: 1;
     position: inherit;
     visibility: visible;
-    width: calc(100% - 0px)
+    /* width: calc(100% - 0px) */
 }
 
 .pro-price-2 {
-    color: #c87065;
+    /* color: #B79BB2; */
     font-size: 18px;
     font-weight: 700;
     line-height: 1;
@@ -1292,7 +1292,7 @@ pre {
 }
 
 .blog-2 .like-share a:hover {
-    color: #c87065
+    color: #B79BB2
 }
 
 .blog-2 .post-meta {
@@ -1352,7 +1352,7 @@ pre {
 
 .footer-subscribe button:hover {
     background: #f6f6f6 none repeat scroll 0 0;
-    color: #c8a165
+    color:#B79BB2
 }
 
 .copyright-2 {
@@ -1365,7 +1365,8 @@ pre {
 }
 
 .heading-banner-area {
-    background: rgba(0, 0, 0, 0) url(img/bg/1.jpg) no-repeat scroll center center/cover
+    background: rgba(229, 221, 221, 0) url("/public/img/bg/1.jpg") no-repeat scroll center center/cover;
+
 }
 
 .heading-banner-title h2 {
@@ -1405,7 +1406,7 @@ pre {
 }
 
 .breadcumbs ul li:hover a {
-    color: #c87065
+    color: #B79BB2
 }
 
 .breadcumbs li::after {
@@ -1425,7 +1426,11 @@ pre {
 }
 
 .overlay-bg::before {
-    background: rgba(0, 0, 0, .3) none repeat scroll 0 0;
+    /* background: #B79BB2 none repeat scroll 0 0; */
+    /* background-image: url(/image/back.jpg); */
+    background-size: 100% 100%;
+    background-position: center;
+    object-fit: cover;
     content: "";
     height: 100%;
     left: 0;
@@ -1442,7 +1447,7 @@ pre {
 
 .option-btn.active,
 .option-btn:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .dropdown-menu {
@@ -1478,7 +1483,7 @@ pre {
 }
 
 .widget-search button:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .widget {
@@ -1529,7 +1534,7 @@ pre {
 
 .product-cat .treeview li span:hover,
 .product-cat .treeview li.collapsable span {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .product-cat .treeview li>ul>li>a {
@@ -1546,7 +1551,7 @@ pre {
 
 .product-cat .treeview li>a:hover,
 .product-cat .treeview li>ul>li>a:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .price_slider_amount {
@@ -1573,12 +1578,12 @@ pre {
 }
 
 .ui-slider-range.ui-widget-header.ui-corner-all {
-    background: #c87065 none repeat scroll 0 0
+    background: #B79BB2 none repeat scroll 0 0
 }
 
 .ui-slider-handle.ui-state-default.ui-corner-all {
     background: #fff none repeat scroll 0 0;
-    border: 2px solid #c87065;
+    border: 2px solid #B79BB2;
     height: 12px;
     width: 12px
 }
@@ -1609,13 +1614,13 @@ span.color {
 
 .color-filter ul li.active span.color,
 .color-filter ul li:hover span.color {
-    outline: 1px solid #d6b98c;
+    outline: 1px solid #c4baab;
     outline-offset: 1px
 }
 
 .color-filter ul li.active a,
 .color-filter ul li.active span.count {
-    color: #c8a165
+    color:#B79BB2
 }
 
 span.color.color-1 {
@@ -1667,7 +1672,7 @@ span.color.color-7 {
 
 .size-filter ul li a:hover,
 .size-filter ul li.active a {
-    background: #c8a165;
+    background: #dad4cc;
     color: #fff
 }
 
@@ -1729,7 +1734,7 @@ span.color.color-7 {
 }
 
 .shop-tab li a.active {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .shop-list .single-product {
@@ -1789,7 +1794,7 @@ input.cart-plus-minus-box {
 }
 
 .qtybutton:hover {
-    color: #c8a165
+    color: #aca69d
 }
 
 .dec.qtybutton::before,
@@ -1844,7 +1849,7 @@ input.cart-plus-minus-box {
 
 .pagination ul li.active a,
 .pagination ul li:hover a {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .single-pro-area .single-product:hover {
@@ -1875,7 +1880,7 @@ input.cart-plus-minus-box {
 
 .single-pro-size ul li a:hover,
 .single-pro-size ul li.active a {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .single-pro-size ul li {
@@ -1951,7 +1956,7 @@ input.cart-plus-minus-box {
 }
 
 .single-pro-info .slick-arrow:hover {
-    background: #c8a165 none repeat scroll 0 0;
+    background:#B79BB2 none repeat scroll 0 0;
     color: #fff
 }
 
@@ -2030,7 +2035,7 @@ input.cart-plus-minus-box {
 }
 
 .single-pro-tab-menu ul li a.active {
-    background: #c8a165 none repeat scroll 0 0;
+    background: #B79BB2 none repeat scroll 0 0;
     color: #fff
 }
 
@@ -2068,7 +2073,7 @@ input.cart-plus-minus-box {
 }
 
 .comment-reply a:hover {
-    background: #c8a165 none repeat scroll 0 0;
+    background:#B79BB2 none repeat scroll 0 0;
     color: #fff
 }
 
@@ -2086,7 +2091,7 @@ input.cart-plus-minus-box {
 }
 
 .your-rating span a {
-    color: #c87065;
+    color: #B79BB2;
     font-size: 16px
 }
 
@@ -2203,7 +2208,7 @@ input.cart-plus-minus-box {
 }
 
 .product-remove i:hover {
-    background: #c8a165 none repeat scroll 0 0;
+    background:#B79BB2 none repeat scroll 0 0;
     color: #fff
 }
 
@@ -2244,7 +2249,7 @@ input.cart-plus-minus-box {
 }
 
 .payment-details table tr:last-child td {
-    color: #c87065;
+    color: #B79BB2;
     padding: 15px 30px 0
 }
 
@@ -2266,7 +2271,7 @@ input.cart-plus-minus-box {
 }
 
 .cart-page-menu li a.active {
-    background: #c8a165 none repeat scroll 0 0;
+    background:#B79BB2 none repeat scroll 0 0;
     color: #fff
 }
 
@@ -2359,7 +2364,7 @@ input.cart-plus-minus-box {
 }
 
 .my-account-menu a {
-    background: #c8a165;
+    background:#B79BB2;
     color: #fff;
     display: block;
     font-style: normal;
@@ -2371,11 +2376,11 @@ input.cart-plus-minus-box {
 }
 
 .my-account-menu a.collapsed {
-    background: #c87065
+    background: #B79BB2
 }
 
 .my-account-menu-2 a {
-    background: #c87065
+    background: #B79BB2
 }
 
 .my-account .panel-body {
@@ -2435,7 +2440,7 @@ input.cart-plus-minus-box {
 }
 
 .post-share a:hover {
-    color: #c8a165
+    color: #bfb8ad
 }
 
 .post-share a:last-child {
@@ -2503,7 +2508,7 @@ input.cart-plus-minus-box {
 }
 
 .error-form button:hover {
-    color: #c8a165
+    color: #7d7d7c
 }
 
 .go-to-home {
@@ -2567,7 +2572,7 @@ input.cart-plus-minus-box {
 }
 
 .team-social ul li a:hover {
-    color: #c8a165
+    color:#B79BB2
 }
 
 .contact-details ul li {

@@ -27,8 +27,12 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.static(path.join(__dirname,'public')))
 
 app.use('/',router)
+
 app.use('/admin',adminRouter)
-   
+
+app.get('*',(req,res)=>{
+  res.redirect('/404')
+})
 
 app.listen(PORT,()=>{
   console.log("http://localhost:3000")

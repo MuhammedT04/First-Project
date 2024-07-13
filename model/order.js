@@ -1,6 +1,12 @@
+const e = require("express");
 const  mongoose=require("mongoose");
 
 const Order=mongoose.Schema({
+    
+    OrderId:{
+        type:Number,
+        required:true
+    },
     UserId:{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
@@ -20,20 +26,26 @@ const Order=mongoose.Schema({
         locality:{type:String,required:true},
 },
     payment:{
-        typr:String
+        type:String,
+        enum: ['Online Payment','Cash on Delivery','Wallet'], 
+        required: true,
     },
     orderDate: {
         type: Date,
         required: true,
-        default: Date.now
     },
-    orderStatus: { 
-        type: String,
-         enum: ['pending', 'shipped', 'delivered','canceled'], 
-         default: 'pending'
-         },
-         
+    offer:{
+        type:Number,
+        default:0
+    },
+    paymentStatus:{
+      type:String,
+      enum:['Paid','Pending'],
+      default:'Pending'
+    },
+
          products:[{
+
             productId:{
               type:mongoose.Schema.Types.ObjectId,
               ref:"product",
@@ -43,17 +55,57 @@ const Order=mongoose.Schema({
                 type:Number,
                 required:true,
                 default:1,
-            },
-            totalPrice:{
-                type:Number,
-                default:0
-            },
-            totalOfferPrice:{
-                type:Number,
-                required:true,
-                default:0
-            }
+            }, 
+               ProductStatus: {
+                type: String,
+                enum: ['Ordered', 'Shipped', 'Delivered','Canceled','Return'], 
+                default: 'Ordered'
+             },
+             returnTime:{
+              type:Date
+             }
+
         }],
+
+        Return:[{
+          productId:{
+            type:String
+          },
+              date:{
+                type: Date,
+                default: Date.now 
+              },
+              account:{
+                type:Number
+              },
+              phoneNumber:{
+                type:Number
+              },
+              accountHolderName:{
+                type:String
+              },
+              ReturnMethod:{
+                type:String,
+                enum: ['Wallet','Bank Account'],
+                default: 'Wallet'
+              },
+              ReturnStatus:{
+                type:Boolean,
+                default:false
+              },
+              reason:{
+                type:String
+              },
+              OrderRequst:{
+                type:String,
+                enum:['Request','Approved'],
+                default:'Request'
+              }
+        }]
 })
+
+
+
+
 
 module.exports=mongoose.model('orders',Order)

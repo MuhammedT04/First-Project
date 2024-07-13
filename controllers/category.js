@@ -1,12 +1,13 @@
 const category=require('../model/category')
-
+const Offer=require('../model/offer')
 
 //category list
 
 const categorylist=async(req,res)=>{
     try {
         const categoryData=await category.find()
-        res.render("Admin/categoryList",{Data:categoryData})
+        const offer=await Offer.find()
+        res.render("Admin/categoryList",{Data:categoryData,offer})
     } catch (error) {
         console.log(error.message)
     }
@@ -27,7 +28,8 @@ const addcategory=async(req,res)=>{
 
 const categoryAddData=async(req,res)=>{
     try {
-        const firstData=await category.findOne({name:req.body.name})
+        const firstData = await category.findOne({ name: { $regex: new RegExp(req.body.name, 'i') } });
+
         if(!firstData){
 
             const categoryData= new category({
@@ -70,7 +72,7 @@ const categoryEdit=async(req,res)=>{
 
 const categoryEditData=async(req,res)=>{
     try {
-        const editdata= await category.findOne({name:req.body.name})
+        const editdata = await category.findOne({ name: { $regex: new RegExp(req.body.name, 'i') } });
         if(!editdata){
             const UpdateData=await category.findByIdAndUpdate({_id:req.body.cid},{$set:{name:req.body.name,description:req.body.description}})
             res.redirect('/admin/Category')
@@ -101,7 +103,7 @@ const categoryDelete=async(req,res)=>{
 
 const categoryBlock=async(req,res)=>{
     try {
-        const Id=req.body._id
+        const Id=req.body.id
         const catdata=await category.findOne({_id:Id})
         catdata.status=!catdata.status
         catdata.save()

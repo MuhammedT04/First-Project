@@ -7,8 +7,22 @@
     border-bottom: 1px;
     border-style: solid ;
 }
+.refferal{
+    background-color: white;
+height: 12vh;
+border-radius: 10px;
+
+}
+.refferalCode{
+    width: 15vw;
+    height: 2.5rem;
+    background-color: rgb(241, 241, 241);
+}
 .nav-item>a{
     color: rgb(136, 65, 65);
+}
+.nav-item>a:hover{
+    color: rgb(0, 0, 0);
 }
 .first{
     padding: 4rem;
@@ -18,12 +32,13 @@
 
 background-color: white;
 height: 40vh;
-border-radius: 20px;
+border-radius: 10px;
 }
 .user-profile>input{
-    border: 1px;
+    border: 0px;
     border-style: solid;
     border-color: rgb(188, 28, 28);
+    border-radius: 10px;
 }
 .button{
     background-color: rgb(39, 38, 38);
@@ -93,10 +108,11 @@ text>p{
     width: 100%;
     background-color: white;
     height: 20vw;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 .password2>input{
     width:30vw ;
+    border-radius: 10px;
 }
 .fullAdd{
     width: 100%;
@@ -110,3 +126,151 @@ text>p{
     border: 1px solid;
     border-radius: 20px;
 }
+
+.search i{
+    font-size: 25px;
+    line-height: 25px
+}
+.search{
+    display: inline-block;
+    padding-left: 30px;
+    position: relative;
+    right: 0
+    
+}
+.search,
+.logo {
+    transition: all .5s ease 0s
+}
+.addButton>button{
+    background-color: rgb(39, 38, 38);
+    width: 5rem;
+    color: white;
+    height: 3rem;
+    border-radius: 13px;
+}
+
+/* Main container */
+.page-content.first {
+    padding: 2rem; /* Adjust padding as needed */
+}
+
+/* Dashboard sidebar */
+.first-side {
+    padding-bottom: 2rem; /* Add space at the bottom */
+}
+
+/* Dashboard navigation */
+.nav-dashboard {
+    padding-right: 0; /* Remove right padding */
+    border: none; /* Remove border */
+}
+
+.nav-item {
+    height: auto; /* Adjust height for responsiveness */
+    padding: 1rem 0; /* Add padding top and bottom */
+    border: none; /* Remove border */
+}
+
+.nav-item>a {
+    color: rgb(136, 65, 65); /* Adjust link color */
+    font-size: 1rem; /* Adjust font size */
+}
+
+/* User profile section */
+.user-profile {
+    background-color: white;
+    height: auto; /* Remove fixed height */
+    border-radius: 10px;
+    padding: 2rem; /* Add padding */
+}
+
+.user-profile>input {
+    width: 100%; /* Adjust input width */
+    margin-bottom: 1rem; /* Add margin bottom */
+}
+
+
+
+/* Referral section */
+.refferal {
+    background-color: white;
+    height: auto; /* Remove fixed height */
+    border-radius: 10px;
+    padding: 1rem; /* Add padding */
+}
+
+.refferalCode {
+    width: 100%; /* Adjust width */
+    height: auto; /* Remove fixed height */
+    background-color: rgb(241, 241, 241);
+}
+
+/* Orders section */
+.orders {
+    padding: 2rem; /* Add padding */
+}
+
+.orders-di {
+    height: auto; /* Remove fixed height */
+}
+
+/* Address section */
+.addres {
+    padding-left: 0; /* Remove padding */
+}
+
+.fullAdd {
+    height: auto; /* Remove fixed height */
+}
+
+.addressDe {
+    width: 60%; /* Adjust width */
+    height: auto; /* Remove fixed height */
+}
+
+/* Password section */
+.password {
+    height: auto; /* Remove fixed height */
+    padding: 2rem; /* Add padding */
+}
+
+.password2>input {
+    width: 100%; /* Adjust input width */
+}
+
+/* Wallet section */
+.walletBack {
+    width: 100%; /* Adjust width */
+}
+
+.select-menu {
+    width: 100%; /* Adjust width */
+}
+
+.select{
+    width: 100%;
+}
+/* Coupon section */
+.tab-pane#tab-coupon {
+    padding: 2rem; /* Add padding */
+}
+
+/* Wishlist section */
+.tab-pane#tab-Wishlist {
+    padding: 2rem; /* Add padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-4 {
+        width: 100%; /* Make sidebar full width on smaller screens */
+    }
+    .col-md-8 {
+        width: 100%; /* Make main content full width on smaller screens */
+    }
+    .select{
+        width: 50%;
+    }
+}
+

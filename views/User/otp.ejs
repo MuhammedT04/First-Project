@@ -58,7 +58,8 @@
                                 <div class="text-danger d-flex justify-content-center">
                                     <h6 class="text-danger "><%=locals.msg%></h6>
                                     </div>
-                                <div class="d-flex justify-content-center" id="otpTimer"></div>
+
+                                <div class="d-flex justify-content-center" id="timer"></div>
                                 
 
 
@@ -99,40 +100,33 @@ input[type="number"]::-webkit-outer-spin-button {
 }
     </style>
 
-<script>
+<!-- <script>
  
 
  const inputs = document.querySelectorAll("input"),
     button = document.querySelector("button");
 
-    // iterate over all inputs
     inputs.forEach((input, index1) => {
         input.addEventListener("keyup", (e) => {
-            // This code gets the current input element and stores it in the currentInput variable
-            // This code gets the next sibling element of the current input element and stores it in the nextInput variable
-            // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
             const currentInput = input,
             nextInput = input.nextElementSibling,
             prevInput = input.previousElementSibling;
 
-            // if the value has more than one character then clear it
             if (currentInput.value.length > 1) {
                 currentInput.value = "";
                 return;
             }
-            // if the next input is disabled and the current value is not empty
-            //  enable the next input and focus on it
+
             if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
                 nextInput.removeAttribute("disabled");
                 nextInput.focus();
             }
 
-            // if the backspace key is pressed
+
             if (e.key === "Backspace") {
-                // iterate over all inputs again
+
                 inputs.forEach((input, index2) => {
-                // if the index1 of the current input is less than or equal to the index2 of the input in the outer loop
-                // and the previous element exists, set the disabled attribute on the input and focus on the previous element
+
                 if (index1 <= index2 && prevInput) {
                         input.setAttribute("disabled", true);
                         input.value = "";
@@ -140,8 +134,7 @@ input[type="number"]::-webkit-outer-spin-button {
                     }
                 });
             }
-            //if the fourth input( which index number is 3) is not empty and has not disable attribute then
-            //add active class if not then remove the active class.
+
             if (!inputs[3].disabled && inputs[3].value !== "") {
                 button.classList.add("active");
                 return;
@@ -150,29 +143,25 @@ input[type="number"]::-webkit-outer-spin-button {
         });
     });
 
-    //focus the first input which index is 0 on window load
+
     window.addEventListener("load", () => inputs[0].focus());
 
 
 
 
 
-// Function to initiate the timer
 function initTimer(durationInSeconds) {
     const display = document.querySelector('#otpTimer');
     startTimer(durationInSeconds, display);
 
-    // Disable Resend OTP link initially
     toggleResendButton(false);
 }
 
-// Function to toggle the visibility and state of Resend OTP button
 function toggleResendButton(enabled) {
     const resendButton = document.getElementById('resendButton');
     resendButton.style.pointerEvents = enabled ? 'auto' : 'none';
 }
 
-// Function to start the timer
 function startTimer(duration, display) {
     let timer = duration, minutes, seconds;
     const intervalId = setInterval(function () {
@@ -185,20 +174,18 @@ function startTimer(duration, display) {
         display.textContent = minutes + ':' + seconds;
 
         if (--timer < 0) {
-            // Show the Resend OTP button when the timer reaches zero
             toggleResendButton(true);
-            // Hide the timer display or update it as needed
-            display.style.display = 'none'; // Change this line as per your requirement
 
-            // Clear the interval
+            display.style.display = 'none'; 
+
             clearInterval(intervalId);
         }
     }, 1000);
 }
 
-// Function to resend OTP
+
 function resendOTP() {
-    toggleResendButton(false); // Disable the Resend OTP link to prevent multiple clicks
+    toggleResendButton(false); 
 
     fetch('/resendOTP', {
         method: 'POST',
@@ -208,22 +195,117 @@ function resendOTP() {
     })
     .then(response => response.json())
     .then(data => {
-        // Handle the response as needed
+       
         console.log(data);
 
-        initTimer(60); // 60 seconds for testing, adjust as needed
+        initTimer(60); 
     })
     .catch(error => {
         console.error('Error:', error);
-        toggleResendButton(true); // Enable Resend OTP link in case of an error
+        toggleResendButton(true); 
     });
 }
 
-// Initialize the timer when the page loads
-document.addEventListener('DOMContentLoaded', function () {
-    initTimer(60); // 60 seconds for testing, adjust as needed
-});
 
+document.addEventListener('DOMContentLoaded', function () {
+    initTimer(60);
+}); -->
+
+
+<!-- </script> -->
+
+<script>
+
+const inputs = document.querySelectorAll("input"),
+    button = document.querySelector("button");
+
+    inputs.forEach((input, index1) => {
+        input.addEventListener("keyup", (e) => {
+            const currentInput = input,
+            nextInput = input.nextElementSibling,
+            prevInput = input.previousElementSibling;
+
+            if (currentInput.value.length > 1) {
+                currentInput.value = "";
+                return;
+            }
+
+            if (nextInput && nextInput.hasAttribute("disabled") && currentInput.value !== "") {
+                nextInput.removeAttribute("disabled");
+                nextInput.focus();
+            }
+
+
+            if (e.key === "Backspace") {
+
+                inputs.forEach((input, index2) => {
+
+                if (index1 <= index2 && prevInput) {
+                        input.setAttribute("disabled", true);
+                        input.value = "";
+                        prevInput.focus();
+                    }
+                });
+            }
+
+            if (!inputs[3].disabled && inputs[3].value !== "") {
+                button.classList.add("active");
+                return;
+            }
+            button.classList.remove("active");
+        });
+    });
+
+
+    window.addEventListener("load", () => inputs[0].focus());
+
+
+function startTimer() {
+
+const urlParams = new URLSearchParams(window.location.search);
+const createdAt = parseInt(urlParams.get("time"), 10); // OTP creation timestamp
+
+const currentTime = Date.now();
+
+const totalOtpTime = 60; // Total time for OTP expiration
+
+const elapsedSeconds = Math.floor((currentTime - createdAt) / 1000); // Calculate elapsed time
+let timeLeft = totalOtpTime - elapsedSeconds; // Calculate remaining time
+
+const timerElement = document.getElementById("timer");
+const buttonContainer = document.getElementById("button-container");
+
+if (timeLeft <= 0) {
+
+    timerElement.textContent = "Resend OTP";
+    document.getElementById("resend-btn").disabled = false;
+    buttonContainer.style.display = "block"; // Show the "Resend OTP" button
+
+} else {
+
+    timerElement.textContent = `Resend OTP in ${timeLeft} seconds`;
+
+    const countdown = setInterval(() => {
+
+        if (timeLeft <= 0) {
+
+            clearInterval(countdown);
+            timerElement.textContent = "Resend OTP";
+            document.getElementById("resend-btn").disabled = false;
+            buttonContainer.style.display = "block"; // Show the "Resend OTP" button
+
+        } else {
+
+            timeLeft -= 1; // Decrement time left
+            timerElement.textContent = `Resend OTP in ${timeLeft} seconds`;
+
+        }
+
+    }, 1000); // Update the countdown every second
+}
+}
+
+window.onload = startTimer; // Start the timer when the page loads
 
 </script>
 </body>

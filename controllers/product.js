@@ -1,16 +1,32 @@
 const productData=require('../model/product')
 const session=require('express-session')
 const category=require('../model/category')
+const Offer=require('../model/offer')
+const moment = require('moment');
+const currentDate = moment();
+const Order=require('../model/order')
+
+
  //products list
 
- const product=async(req,res)=>{
+ const product = async (req, res) => {
     try {
-        const Datas=await productData.find().populate('category').exec()
-        res.render('Admin/products',{Data:Datas})
+        const limit = 8;
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * limit;
+
+        const totalProductCount = await productData.countDocuments();
+        const totalPages = Math.ceil(totalProductCount / limit);
+
+        const shopProducts = await productData.find().populate('category').skip(skip).limit(limit).exec();
+        const offer=await Offer.find()
+       
+        res.render('Admin/products', { currentPage: page, totalPages, shopProducts, offer });
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
     }
- }
+};
+
 
 //Add product   image upload 
 
@@ -26,8 +42,6 @@ const addproduct=async(req,res)=>{
 
 const AddProductdata=async(req,res)=>{
     try {
-        const price=req.body.price
-        const offerPrice=Math.round(price/100*(100-req.body.offer))
 
        const images=req.files.map(file=>file.filename)
         const productdatas= new productData({
@@ -35,16 +49,14 @@ const AddProductdata=async(req,res)=>{
             category:req.body.category,
             price:req.body.price,
             quantity:req.body.quantity,
-            date:req.body.date,
+            date:Date(),
             image:images,
             description:req.body.description,
-            offerPrice:offerPrice,
-            offer:req.body.offer
+            offerPrire:req.body.price
         })
-        console.log(productdatas.offerPrice)
         const datastorig=await productdatas.save()
         if(datastorig){
-            res.redirect('/admin/AddProduct')
+            res.redirect('/admin/product')
         }else{
             res.redirect("/admin/home")
         }
@@ -70,12 +82,12 @@ const productEdit=async(req,res)=>{
 
 const EditProductData=async(req,res)=>{
     try {
-        const {name,category,quantity,price,description,date,offer}=req.body;
-        const offerPrice=Math.round(price/100*(100-offer))
+        const {name,category,quantity,price,description,Offer}=req.body;
+        const newOfferPrice = Math.round(price / 100 * (100 - Offer))
+        const date=Date()
         const images=req.files.map(file=>file.filename)
         let old=await productData.findOne({_id:req.body.id});
         let image=[]
-        console.log(images,req.body.kk);
         for(let i=0;i<4;i++){
             if(old.image[i]!==req.body.kk[i]){
                 images.forEach(e=>{
@@ -88,9 +100,7 @@ const EditProductData=async(req,res)=>{
             }
         }
 
-
-     
-        const updated=await productData.findOneAndUpdate({_id:req.body.id},{$set:{name,category,quantity,price,description,date,image,offerPrice,offer}},{new:true})
+        const updated=await productData.findOneAndUpdate({_id:req.body.id},{$set:{name,category,quantity,price,description,date,image,offerPrire:newOfferPrice}},{new:true})
 
         res.redirect('/admin/product')
     } catch (error) {
@@ -105,8 +115,22 @@ const ProductBlock=async(req,res)=>{
     try {
         const {id}=req.body
         const BlockData=await productData.findOne({_id:id})
-        BlockData.status=!BlockData.status
-        BlockData.save()
+        const orderProductCheck = await Order.findOne({
+            "products.ProductStatus": "Ordered",
+            products:{
+
+                $elemMatch: {
+                    productId: id
+                }
+            }
+          
+        });
+        console.log(orderProductCheck,'orderProductCheck')
+        if(!orderProductCheck){
+            console.log('hjdfhjfhfhfhfhfhf');
+            BlockData.status=!BlockData.status
+            BlockData.save()
+        }
     } catch (error) {
         console.log(error.message)  
     }
@@ -124,6 +148,8 @@ const ProductDelete=async(req,res)=>{
         console.log(error.message)
     }
 }
+
+
 
 module.exports={
     product,

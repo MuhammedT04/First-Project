@@ -9,8 +9,7 @@ const  mongoose=require("mongoose");
     },
     phone:{
         type:String,
-        required:true,
-        unique:true
+  
     },
     email:{
         type:String,
@@ -37,6 +36,30 @@ const  mongoose=require("mongoose");
         type:mongoose.Schema.Types.ObjectId,
         ref:"address"
     },
+    coupons:[{
+        couponId: { type: mongoose.Schema.Types.ObjectId, 
+        ref:'coupon' 
+    },
+    code:{
+        type:String
+    },
+    couponStatus: {
+        type: String,
+        enum: ['Expired','Claimed','Claim'], 
+        default: 'Claim'
+     },
+     expiryDate:{
+        type:Date,
+        required: true,
+    },
+    }],
+    refferalId:{
+        type:String,
+        required:true
+    },
+    refferalCodeSave:{
+        type:String
+    }
     
  })
  module.exports=mongoose.model('zaraData',user)  

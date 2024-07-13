@@ -15,6 +15,10 @@ const  mongoose=require("mongoose");
         type:Boolean,
         default:true,
         required:true
+    },
+    offer:{
+        type:Number,
+        default:0
     }
  })
 

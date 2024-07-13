@@ -3,6 +3,10 @@ const adminRouter = express();
 const controllers=require('../controllers/admin')
 const controllerproduct=require('../controllers/product')
 const controllercategory=require('../controllers/category')
+const controllerOrder=require('../controllers/order')
+const controllerCoupon=require('../controllers/coupon')
+const controllerOffer=require('../controllers/offer')
+const controllerSalesReport=require('../controllers/salesReport')
 const multer=require('multer')
 const path =require('path');
 const auth=require('../middleware/authadmin')
@@ -26,11 +30,13 @@ const upload=multer({storage:storage})
 adminRouter.get('/login',auth.logout,controllers.login)
 adminRouter.post('/login',controllers.loginadmin)
 adminRouter.get('/home',auth.login,controllers.home)
-adminRouter.get('/Userdata',controllers.userList)
+adminRouter.get('/Userdata',auth.login,controllers.userList)
 adminRouter.post('/blockUser',controllers.blockUser)
 adminRouter.get('/logout',controllers.logout)
 
-
+adminRouter.get('/returnlist',auth.login,controllers.returns)
+adminRouter.post('/ReturnRequst',controllers.returnPriceAddWallet)
+adminRouter.post('/razorPay',controllers.RazorPay)
 //product 
 
 adminRouter.get('/product',auth.login,controllerproduct.product)
@@ -52,6 +58,42 @@ adminRouter.get('/DeleteCategory',auth.login,controllercategory.categoryDelete)
 adminRouter.post('/categoryBlock',controllercategory.categoryBlock)
 
 
+//Order 
 
+adminRouter.get('/OrderList',auth.login,controllerOrder.adminOrder)
+adminRouter.get('/productview',auth.login,controllerOrder.productDetails)
+adminRouter.post('/updateOrderStatus', controllerOrder.updateOrderStatus);
+
+
+//Coupon
+
+adminRouter.get("/coupon",auth.login,controllerCoupon.couponList)
+adminRouter.get('/AddCoupon',auth.login,controllerCoupon.AddCoupon)
+adminRouter.post('/addcoupon',upload.single('image'),controllerCoupon.AddCouponData)
+adminRouter.get('/couponEdit/:id',auth.login,controllerCoupon.EditCoupon)
+adminRouter.post('/EditCoupon',controllerCoupon.updateCoupon)
+adminRouter.post('/couponDelete',controllerCoupon.couponDelete)
+
+
+//Offer 
+
+adminRouter.get("/offerList",auth.login,controllerOffer.offerList)
+adminRouter.get('/addOffer',auth.login,controllerOffer.AddOffer)
+adminRouter.post('/AddOffer',controllerOffer.addOfferData)
+adminRouter.get('/EditOffer/:id',auth.login,controllerOffer.EditOffer)
+adminRouter.post('/EditOffer',controllerOffer.EditUpdateData)
+adminRouter.post('/productOffer',controllerOffer.singleProduct)
+adminRouter.post('/categoryOffer',controllerOffer.categoryOffer)
+
+
+// Sales Report
+
+adminRouter.get('/SalesReport/:id',auth.login,controllerSalesReport.salesList)
+adminRouter.post('/customDate',controllerSalesReport.customDate)
+adminRouter.get('/ledgerBook',auth.login,controllerSalesReport.ledgerBook)
+
+//chart
+
+adminRouter.get('/chart',auth.login,controllerSalesReport.chart)
 
 module.exports=adminRouter

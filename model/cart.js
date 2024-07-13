@@ -17,24 +17,10 @@ const cart=mongoose.Schema({
             required:true,
             default:1,
         },
-        totalPrice:{
-            type:Number,
-            default:0
-        },
-        totalOfferPrice:{
-            type:Number,
-            required:true,
-            default:0
-        }
+    
     }],
-    total:{
-        type:Number,
-        default:0
-    },
-    offerTotal:{
-        type:Number,
-        default:0
-    }
+ 
 })
+
 
 module.exports=mongoose.model('cart',cart)

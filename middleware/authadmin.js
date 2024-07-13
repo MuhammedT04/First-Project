@@ -4,7 +4,8 @@ const logout = async (req,res,next)=>{
             res.redirect('/admin/home')
         }else{
             next()
-        }
+            }
+          
     } catch (error) {
         console.log(error.message)
         
@@ -18,6 +19,7 @@ const login = async (req,res,next)=>{
         }else{
             next()
         }
+      
     } catch (error) {
         console.log(error.message)
         

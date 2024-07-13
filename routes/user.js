@@ -7,9 +7,9 @@
     const controllerProfile=require('../controllers/userProfile')
     const controllerCart=require('../controllers/cart')
     const controllerOrder=require('../controllers/order')
+    const controllerwallet=require('../controllers/wallet')
 
-
-
+    router.get('/404',controllers.user404)
 
     router.get('/',auth.blockorUnblock,controllers.home)
     router.get('/logout',controllers.logout)
@@ -25,22 +25,32 @@
 
     router.get('/product',controllers.SingleProduct)
     router.get('/shop',controllers.shop)
+    router.get('/filter/:id',controllers.lowToHigh)
+    router.get('/type/:id',controllers.Types)
 
     router.get('/forget',controllers.forget)
     router.post('/forget',controllers.EmailChecking)
     router.get('/confirmpassword',controllers.confirm)
     router.post('/confirmPassword',controllers.confirmPassword)
 
+    
+
 //Profile
 
-router.get('/profile',controllerProfile.profile)
+router.get('/profile',auth.login,controllerProfile.profile)
 router.post('/userEdit',controllerProfile.profileEdit)
-router.get('/myOrder',controllerProfile.myorder)
+router.get('/myOrder',auth.login,controllerProfile.myorder)
+router.post('/usercancel',controllerProfile.usercancel)
 router.post('/changepasswor',controllerProfile.changePassword)
 router.post('/addAddress',controllerProfile.Address)
 router.put('/editAddress',controllerProfile.editAddress)
 router.post('/editaddress',controllerProfile.editaddress)
 router.post('/deleteAdderess',controllerProfile.deletes)
+router.post('/wishlist',controllerProfile.Wishlist)
+router.post('/wishlistremove',controllerProfile.removewishlist)
+router.get('/invoice/:id',auth.login,controllerProfile.invoice)
+router.post('/Repayment',controllerProfile.rePayment)
+router.post('/orderRepaymet',controllerProfile.RepaymetStatus)
 
 //Cart
 
@@ -54,15 +64,44 @@ router.post('/cartDelete',controllerCart.cartremove)
 router.get('/checkout',auth.login,controllerCart.checkOut)
 router.post('/address',controllerCart.addressData) 
 router.post('/adressChange',controllerCart.changeAdress) 
-          
-
+router.post('/razor',controllerOrder.razor)   
+router.post('/checkOutEdit',controllerCart.checkutEditAddress)     
+router.post('/CheckOutEditAddress',controllerCart.checkOutAddressUpdate)
 
 //Order page
 
 router.post('/order',controllerOrder.order)
-router.get('/ThankYou',controllerOrder.ThankYou)
+router.get('/ThankYou',auth.login,controllerOrder.ThankYou)
 
 
+//Coupon
+
+router.post('/applycoupon',controllerCart.ApplyCoupon)
+
+
+
+//wallet
+
+router.post('/razorPay',controllerwallet.razorPay)
+router.post('/addWallet',controllerwallet.addWallet)
+
+
+//Return 
+
+
+router.post('/reason',controllerProfile.reason)
+router.get('/returnMethod',controllerProfile.returnRequest)
+router.post('/returnMethod',controllerProfile.ReturnMethods)
+
+
+//Blog
+
+router.get('/blog',controllers.Blog)
+
+
+//Contact
+
+router.get('/Contact',controllers.contact)
 
 
 //Login With Google

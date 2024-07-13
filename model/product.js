@@ -24,7 +24,7 @@ const  mongoose=require("mongoose");
         required:true
      },
      date:{
-        type:String,
+        type:Date,
         required:true
      },
      image:{
@@ -35,13 +35,12 @@ const  mongoose=require("mongoose");
         type:String,
         required:true
      },
-     offerPrice:{
-      type:Number,
-      required:true
-     },
      offer:{
       type:Number,
-      required:true
+      default:0
+     },
+     offerPrire:{
+      type:Number,
      }
  })
 
