@@ -19,7 +19,8 @@ const coupon=mongoose.Schema({
         required:true
     },
     image:{
-        type:String
+        type:String,
+          default: '/image/coupon.png'
     },
     offer:{
         type:Number,

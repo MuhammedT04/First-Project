@@ -448,6 +448,8 @@
                 <div class="customer-login mt-30">
                     <h4 class="title-1 title-border text-uppercase">coupon discount</h4>
                     <p class="text-gray">Enter your coupon code if you have one!</p>
+                    <h6 class="text-danger" id="invalidAmount"></h6>
+                    <h6 class="text-danger" id="TimeExceed"></h6>
                     <input class="code" type="text" name="coupon" placeholder="Enter your code here.">
 
                     <button id="clear" type="button" onclick="clear1()"
@@ -828,6 +830,8 @@
                     const discount = document.getElementById('discount')
                     const wallet = document.getElementById('wallet')
                     const total = document.getElementById('total')
+                    const invalidAmount=document.getElementById('invalidAmount')
+                    const invalidCoupon=document.getElementById('TimeExceed')
                     fetch('/applycoupon', {
                         method: "post",
                         headers: {
@@ -839,11 +843,12 @@
                             if (data) {
                                 cle.style.display = 'block';
                                 submit.style.display = 'none';
-
                                 localStorage.setItem("coupenId", code.value)
                                 discount.textContent = '₹' + data.dis + '.00'
                                 total.textContent = '₹' + data.total + '.00';
-                                console.log(data.total, Number(amount), data.total < Number(amount))
+                                invalidAmount.textContent=data.err
+                                invalidCoupon.textContent=data.msg
+
                                 if (data.total < Number(amount)) {
                                     wallet.classList.remove('d-none')
 

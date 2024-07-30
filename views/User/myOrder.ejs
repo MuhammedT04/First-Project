@@ -139,8 +139,19 @@
 			<table>
 				<tbody>
 					<tr>
+					
+						<% let total=0 %>
+												
+						<% total=order.products[0].productId.offerPrire*order.products[0].quantity %>
+	
+						<% total=Math.round(total/ 100 * (100 - order.offer)) %>
+
 						<td><a href="/product?id=<%=order.products[0].productId._id %>"><img  src="/ImageData/<%=order.products[0].productId.image[0]%>" width="100" alt=""></a></td>
-						<td><%=order.products[0].productId.name %> <br> <span><%=order.products[0].productId.offerPrice %></span></td>
+						<td><%=order.products[0].productId.name %> <br>
+			
+							<p>₹ <%=total %></p>
+						</td>
+						
 					</tr>
 					
 				</tbody>
@@ -245,12 +256,14 @@
 		</div>
 		
 	</div>
+	<% if(order.products[0].ProductStatus==="Delivered"){ %>
 	<a class="text-center " href="/invoice/<%=order.products[0]._id%>?OrderId=<%=order.OrderId%>"><div class="d-flex justify-content-center ">
-
-		 <div class="col-md-2 p-2  d-flex justify-content-center "  style="border-radius: 7px;border: 1px solid">
+		
+		<div class="col-md-2 p-2  d-flex justify-content-center "  style="border-radius: 7px;border: 1px solid">
 			<h6 class="text-dark pt-1   ">Invoice Download</h6>
 		</div>
 	</div></a>
+	<% } %>
 	
             <br>
                             

@@ -211,7 +211,7 @@ const logout = async (req, res) => {
 //user list 
 const userList = async (req, res) => {
     try {
-        const limit = 4;
+        const limit = 8;
         const page = parseInt(req.query.page) || 1;
         const skip = (page - 1) * limit;
 

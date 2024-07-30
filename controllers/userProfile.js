@@ -32,10 +32,9 @@ const profile=async(req,res)=>{
             const msg=req.flash('msg')
             const wishlists = await wishlist.findOne({ UserId: req.session.user_id }).populate('products.productId');
             const couponlist=await User.findOne({_id:req.session.user_id}).populate({path:'coupons.couponId',model:'coupon'})
-            const wallet = await Wallet.findOne({ UserId: req.session.user_id }).sort({ 'transaction.date': -1 });
+            const wallet = await Wallet.findOne({ UserId: req.session.user_id })
             const couponExpired=await User.findOne({_id:req.session.user_id}).populate('coupons.couponId')
             const orderPending=await order.find({UserId:data,paymentStatus:'Pending',payment:'Online Payment'}).populate('products.productId');
-            console.log(orderPending)
             if(Date()>couponExpired.coupons.expiryDate){
                 await User.findOneAndUpdate({_id:req.session.user_id},{$set:{'coupons.$.couponStatus':'Expired'}})
             }
@@ -72,7 +71,7 @@ const profileEdit=async(req,res)=>{
 const myorder=async(req,res)=>{
     try {
         const Id=req.query.id
-        const OrderProductData=await order.findOne({'products._id':Id},{'products.$':1,deliveryAddress:1,OrderId:1,payment:1}).populate('products.productId').select({Return:1})
+        const OrderProductData=await order.findOne({'products._id':Id},{'products.$':1,deliveryAddress:1,OrderId:1,payment:1,offer:1    }).populate('products.productId').select({Return:1})
         res.render('User/myOrder',{order:OrderProductData})
     } catch (error) {
         console.log(error.message)

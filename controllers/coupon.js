@@ -44,7 +44,7 @@ const AddCoupon=async(req,res)=>{
 
 const AddCouponData=async(req,res)=>{
     try {
-        const images=req.file.filename
+
         const {name,lowPrice,highPrice,days,offer,description,BuyLowPrice,BuyhighPrice}=req.body
         const currentDate = new Date();
         const expiryDate = new Date(currentDate);
@@ -54,7 +54,6 @@ const AddCouponData=async(req,res)=>{
             name:name,
             min:lowPrice,
             max:highPrice,
-            image:images,
             expiryDate:expiryDate,
             offer:offer,
             code:generatecode(),

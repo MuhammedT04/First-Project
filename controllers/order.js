@@ -202,18 +202,24 @@ const productDetails=async(req,res)=>{
 
 const updateOrderStatus = async (req, res) => {
     try {
-        const { orderId, newStatus } = req.body;
+        const { orderId, newStatus,ID } = req.body;
+        console.log(ID )
         let expiryDate
         if(newStatus==="Delivered"){
-
-            const currentDate = new Date()
+            const currentDate = new Date() 
             expiryDate = new Date(currentDate)
             expiryDate.setDate(currentDate.getDate() + 7)
+            
+        await Orderlist.findOneAndUpdate(
+                { orderId: ID},
+                { $set: { paymentStatus:"Paid" } },
+                { new: true } 
+            );
         }
         
         const updatedOrder = await Orderlist.findOneAndUpdate(
             { 'products._id': orderId },
-            { $set: { 'products.$.ProductStatus': newStatus,'products.$.returnTime':expiryDate } },
+            { $set: { 'products.$.ProductStatus': newStatus,'products.$.returnTime':expiryDate}},
             { new: true } 
         );
         res.json(updatedOrder);

@@ -11,6 +11,7 @@ const Cart=async(req,res)=>{
     try {
         const {user_id}=req.session
        const productCartData=await cart.findOne({clientId:user_id}).populate('products.productId')
+    
         res.render('User/cart',{Data:productCartData,user_id})
     
     } catch (error) {
@@ -73,7 +74,27 @@ const cartremove=async(req,res)=>{
 }
 
 
+const counts=async(req,res)=>{
+    try {
+        if (req.session.user_id) {
+            
+            const userIdd = req.session.user_id;
 
+            const cartAcction = await cart.findOne({ clientId: userIdd });
+
+            const val = cartAcction.products.length;
+
+            res.send({ success: val });
+
+        } else {
+
+            res.send({success : 0})
+
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 
 
@@ -93,21 +114,29 @@ const ApplyCoupon=async(req,res)=>{
     try {
         const findCouponCode = await User.findOne({
             _id: req.session.user_id,
-            'coupons.code':req.body.code,'coupons.couponStatus':'Claim'
+            'coupons.code':req.body.code,
         },{'coupons.$':1}).populate('coupons.couponId')
         let offers
         let min
         let max
-        // if(findCouponCode){
+        if(findCouponCode.coupons[0].couponStatus==='Claimed'||findCouponCode.coupons[0].couponStatus==="Expired"){
 
+            const cartDatas=await cart.findOne({clientId:req.session.user_id}).populate('products.productId')
+            let qutytotal=0
+            let cartTotal=0
+            cartDatas.products.forEach((Data)=>{
+                qutytotal=Data.productId.offerPrire*Data.quantity
+                cartTotal=cartTotal+qutytotal
+            })
+
+            res.send({msg:'Coupon Time exceed',total:cartTotal,dis:0})
+       }else{
+ 
             findCouponCode.coupons.forEach((of)=>{
                offers=of.couponId.offer
                min=of.couponId.min
                max=of.couponId.max
             })
-        // }else{
-        //      res.send({msg:'the coupen note find'})
-        // }
         req.session.coupon=offers
         req.session.code=req.body.code
         const cartDatas=await cart.findOne({clientId:req.session.user_id}).populate('products.productId')
@@ -122,7 +151,12 @@ const ApplyCoupon=async(req,res)=>{
             let subtotal=cartTotal-discoundPrice
             req.session.orderTotal=subtotal
             res.send({dis:discoundPrice,total:subtotal})
+        }else{ 
+   
+            res.send({err: "Invalid Amount",total:cartTotal,dis:0})
+
         }
+    }
         
     } catch (error) {
         console.log(error.message)
@@ -261,6 +295,7 @@ module.exports={
     ApplyCoupon,
     addressData,
     quantityUpdate,
+    counts,
     cartremove,
     changeAdress,
     checkutEditAddress,

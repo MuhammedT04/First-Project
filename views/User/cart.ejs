@@ -40,7 +40,7 @@
                     <thead>
                         <tr>
                             <th class="product-thumbnail">Product</th>
-                            <th class="product-price">Price</th>
+                       
                             <th class="product-add-cart">Quantity</th>
                             <th class="product-remove">Total</th>                            
                             <th class="product-remove">Remove</th>
@@ -62,10 +62,14 @@
                                         <div class="product-info">
                                             
                                             <h4 class="post-title"><%=data.productId.name %></h4>
+                                            
                                             <% if(data.productId.offer>0){ %>
+                                                ₹<%=data.productId.offerPrire%>
                                                 <span style="color: #0b9639;">(-<%=data.productId.offer%>%)</span>
                                                 <br>
-                                                <% } %>
+                                                <% }else{ %>
+                                                    ₹<%=data.productId.offerPrire%>
+                                                    <% } %>
                                                 <% if(data.productId.quantity<=0){  %>
                                                     <span class="text-danger "> <b>Sold Out</b> </span>
                                                     <% stockCheck=false %>
@@ -75,7 +79,7 @@
                                 </div>
                                 <!-- Single-product end -->				
                             </td>
-                            <td class="product-price ">₹<%=data.productId.offerPrire%></td>
+                         
 
                             <td class="d-flex justify-content-center" style="padding-top: 3.4rem;">
                               <!-- //  class="cart-plus-minus-box"class="cart-plus-minus" -->

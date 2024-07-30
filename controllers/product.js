@@ -5,7 +5,7 @@ const Offer=require('../model/offer')
 const moment = require('moment');
 const currentDate = moment();
 const Order=require('../model/order')
-
+const Banner =require('../model/banner')
 
  //products list
 
@@ -151,6 +151,49 @@ const ProductDelete=async(req,res)=>{
 
 
 
+
+
+
+//Banner ////////////-------------------------------------////////////////////////////////
+
+
+const banner=async(req,res)=>{
+    try {
+        const bannerlist=await Banner.find({})
+        
+        res.render('admin/Banner',{bannerlist})
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+//Edit Banner
+
+const EditBanner=async(req,res)=>{
+    try {
+        const ID=req.query.id
+        const Data=await Banner.findOne({_id:ID})
+        res.render('admin/EditBanner',{Data})
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+const dataUpdate=async(req,res)=>{
+    try {
+        const {name,description,id}=req.body
+        const image=req.file?.filename
+        await Banner.findOneAndUpdate({_id:id},{$set:{name:name,description:description,image:image}})
+        res.redirect("/admin/banner")
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
 module.exports={
     product,
     addproduct,
@@ -160,4 +203,9 @@ module.exports={
     ProductDelete,
     EditProductData,
     
+    //banner
+
+    banner,
+    EditBanner,
+    dataUpdate
 }

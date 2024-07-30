@@ -68,6 +68,7 @@ module.exports = {
             req.session.user_id = req.user._id;
         } 
         console.log(req.session.user_id);
+
         res.redirect("/");
     },
 };

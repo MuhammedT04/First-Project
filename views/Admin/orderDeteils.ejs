@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Add Product </title>
+    <title>Banner </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -364,7 +364,7 @@
                             <li><a href="ecommerce-cart.html" data-key="t-cart">Cart</a></li>
                             <li><a href="ecommerce-checkout.html" data-key="t-checkout">Checkout</a></li>
                             <li><a href="ecommerce-shops.html" data-key="t-shops">Shops</a></li>
-                            <li><a href="ecommerce-add-product.html" data-key="t-add-product">Add Product</a></li>
+                            <li><a href="ecommerce-add-product.html" data-key="t-add-product">Banner</a></li>
                         </ul>
                     </li>
 
@@ -625,7 +625,7 @@
                                             <div class="row">
                                                 <div class="">
                                                     <a href="/admin/Product" class="dropdown-item" data-key="t-products">Products List</a>
-                                                    <a href="/admin/AddProduct" class="dropdown-item" data-key="t-add-product">Add Product</a>
+                                                    <a href="/admin/banner " class="dropdown-item" data-key="t-add-product">Banner</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -869,7 +869,7 @@
                                                                     <option value="Delivered" <%= product.ProductStatus === 'Delivered' ? 'selected' : '' %>>Delivered</option>
                                                                     <option value="Canceled" <%= product.ProductStatus === 'Canceled' ? 'selected' : '' %>>Canceled</option>
                                                                     <% }else{ %>
-                                                                        <select name="productStatus" onchange="updateOrderStatus('<%= product._id %>')"  id="orderStatus_<%= product._id %>">
+                                                                        <select name="productStatus" onchange="updateOrderStatus('<%= product._id %>','<%=order.OrderId%>')"  id="orderStatus_<%= product._id %>">
                                                                             <option value="Ordered" <%= product.ProductStatus === 'Ordered' ? 'selected' : '' %>>Ordered</option>
                                                                             <option value="Shipped" <%= product.ProductStatus === 'Shipped' ? 'selected' : '' %>>Shipped</option>
                                                                             <option value="Delivered" <%= product.ProductStatus === 'Delivered' ? 'selected' : '' %>>Delivered</option>
@@ -940,7 +940,7 @@
       
 
 
-            function updateOrderStatus(orderId) {
+            function updateOrderStatus(orderId,ID) {
     var selectElement = document.getElementById('orderStatus_' + orderId);
     var newStatus = selectElement.value;
 

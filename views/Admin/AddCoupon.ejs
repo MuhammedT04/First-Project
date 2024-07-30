@@ -119,7 +119,7 @@
                                 <li><a href="ecommerce-cart.html" data-key="t-cart">Cart</a></li>
                                 <li><a href="ecommerce-checkout.html" data-key="t-checkout">Checkout</a></li>
                                 <li><a href="ecommerce-shops.html" data-key="t-shops">Shops</a></li>
-                                <li><a href="ecommerce-add-product.html" data-key="t-add-product">Add Product</a></li>
+                                <li><a href="ecommerce-add-product.html" data-key="t-add-product">Banner</a></li>
                             </ul>
                         </li>
 
@@ -376,7 +376,7 @@
                                                 <div class="row">
                                                     <div class="">
                                                         <a href="/admin/Product" class="dropdown-item" data-key="t-products">Products List</a>
-                                                        <a href="/admin/AddProduct" class="dropdown-item" data-key="t-add-product">Add Product</a>
+                                                        <a href="/admin/banner  " class="dropdown-item" data-key="t-add-product">banner </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -495,7 +495,7 @@
                         <i id="icon" onclick="close()" class="ri-close-circle-line position-absolute " style="top: -5%; z-index: 999999; display:none; scale: 1.3; left: 98%;"></i>
                     </label> -->
                     <!-- <input accept="image/*"  onchange="hello(this)" type="file" name="image" id="file"  > -->
-                    <input accept="image/*"  type="file" name="image" id="file"  >
+             
 
                         <div class="mb-3">
                             <label class="form-label" for="productname"> Name</label>
@@ -593,78 +593,78 @@
 
 
         
-// function validatecoupon(){
-// 	let name = document.getElementById('Name').value.trim();
-// 	let buyMiniPrice  = document.getElementById('buyMiniPrice').value.trim();
-// 	let buyMaxPrice = document.getElementById('buyMaxPrice').value.trim();
-// 	let Offer = document.getElementById('Offer').value.trim();
-// 	let miniPrice = document.getElementById('miniPrice').value.trim();
-// 	let maxPrice = document.getElementById('maxPrice').value.trim();
-// 	let Duration = document.getElementById('Duration').value.trim();
-// 	let Description = document.getElementById('Description').value.trim();
+function validatecoupon(){
+	let name = document.getElementById('Name').value.trim();
+	let buyMiniPrice  = document.getElementById('buyMiniPrice').value.trim();
+	let buyMaxPrice = document.getElementById('buyMaxPrice').value.trim();
+	let Offer = document.getElementById('Offer').value.trim();
+	let miniPrice = document.getElementById('miniPrice').value.trim();
+	let maxPrice = document.getElementById('maxPrice').value.trim();
+	let Duration = document.getElementById('Duration').value.trim();
+	let Description = document.getElementById('Description').value.trim();
 
 
-// 	let NameError = document.getElementById('NameError');
-// 	let buyMiniPriceError = document.getElementById('buyMiniPriceError');
-// 	let buyMaxPriceError = document.getElementById('buyMaxPriceError');
-// 	let OfferError = document.getElementById('OfferError');
-// 	let miniPriceError = document.getElementById('miniPriceError');
-// 	let maxPriceError = document.getElementById('maxPriceError');
-// 	let DurationError =document.getElementById('DurationError');
-// 	let descriptionError =document.getElementById('descriptionError');
+	let NameError = document.getElementById('NameError');
+	let buyMiniPriceError = document.getElementById('buyMiniPriceError');
+	let buyMaxPriceError = document.getElementById('buyMaxPriceError');
+	let OfferError = document.getElementById('OfferError');
+	let miniPriceError = document.getElementById('miniPriceError');
+	let maxPriceError = document.getElementById('maxPriceError');
+	let DurationError =document.getElementById('DurationError');
+	let descriptionError =document.getElementById('descriptionError');
 
-// 	NameError.textContent = '';
-// 	buyMiniPriceError.textContent = '';
-// 	buyMaxPriceError.textContent = '';
-// 	OfferError.textContent = '';
-// 	miniPriceError.textContent = '';
-// 	maxPriceError.textContent = '';
-// 	DurationError.textContent = ''
-// 	descriptionError.textContent = ''
+	NameError.textContent = '';
+	buyMiniPriceError.textContent = '';
+	buyMaxPriceError.textContent = '';
+	OfferError.textContent = '';
+	miniPriceError.textContent = '';
+	maxPriceError.textContent = '';
+	DurationError.textContent = ''
+	descriptionError.textContent = ''
 
-// 	let isValied = true
+	let isValied = true
 
-// 	if(name === ''){
-// 		NameError.textContent = 'Please enter coupon name'
-// 		isValied = false
-// 	}
+	if(name === ''){
+		NameError.textContent = 'Please enter coupon name'
+		isValied = false
+	}
 
-// 	if(buyMiniPrice==='') {
-// 		buyMiniPriceError.textContent = 'Please enter a Buy Minimum Price '
-// 		isValied = false
-// 	}
+	if(buyMiniPrice==='') {
+		buyMiniPriceError.textContent = 'Please enter a Buy Minimum Price '
+		isValied = false
+	}
 
-// 	if(buyMaxPrice === ''){
-// 		buyMaxPriceError.textContent = 'Please enter a Buy Maximum Price'
-// 		isValied = false
-// 	}
+	if(buyMaxPrice === ''){
+		buyMaxPriceError.textContent = 'Please enter a Buy Maximum Price'
+		isValied = false
+	}
 
-// 	if(Offer===''){
-// 		OfferError.textContent = 'Please enter a Offer percentage'
-// 		isValied = false
-// 	}
+	if(Offer===''){
+		OfferError.textContent = 'Please enter a Offer percentage'
+		isValied = false
+	}
 
-// 	if(miniPrice === ''){
-// 		miniPriceError.textContent = 'Please enter a Minimum Price'
-// 		isValied = false
-// 	}
+	if(miniPrice === ''){
+		miniPriceError.textContent = 'Please enter a Minimum Price'
+		isValied = false
+	}
 
-// 	if(maxPrice === ''){
-// 		maxPriceError.textContent = 'Please enter a Maximum Price'
-// 		isValied = false
-// 	}
-// 	if(Duration === ''){
-// 		DurationError.textContent = 'Please enter Coupon Expiry Date Duration '
-// 		isValied = false
-// 	}
-// 	if(Description === ''){
-// 		descriptionError.textContent = 'Please enter Coupon Description '
-// 		isValied = false
-// 	}
+	if(maxPrice === ''){
+		maxPriceError.textContent = 'Please enter a Maximum Price'
+		isValied = false
+	}
+	if(Duration === ''){
+		DurationError.textContent = 'Please enter Coupon Expiry Date Duration '
+		isValied = false
+	}
+	if(Description === ''){
+		descriptionError.textContent = 'Please enter Coupon Description '
+		isValied = false
+	}
 
-// 	return isValied
+	return isValied
 
-// }
+}
 
 
 

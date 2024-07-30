@@ -138,6 +138,31 @@ for (const product of products) {
     }
 }
 
+// Offer Delete
+
+
+const deleteOffer=async(req,res)=>{
+    try {
+        const {ID}=req.body
+        const offer= await Offer.findOne({_id:ID})
+
+        const categoryoffer=await Category.find({offer:offer.offer})
+        for(const category of categoryoffer){
+            await Category.updateOne({_id:category._id},{$set:{offer:0}})
+        }
+
+        const productOffer=await Product.find({offer:offer.offer})
+
+        for(const products of productOffer){
+            await Product.updateOne({ _id: products._id },{$set:{offer: 0,offerPrire: products.price}})
+        }
+
+        await Offer.deleteOne({_id:ID})
+        res.redirect('/admin/offerList')
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 module.exports={
@@ -147,5 +172,6 @@ module.exports={
     singleProduct,
     categoryOffer,
     EditOffer,
-    EditUpdateData
+    EditUpdateData,
+    deleteOffer
 }

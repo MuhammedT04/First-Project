@@ -324,7 +324,7 @@
                                 <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="/admin/product" data-key="t-products">Products List</a></li>
                             
-                                    <li><a href="/admin/AddProduct" data-key="t-add-product">Add Product</a></li>
+                                    <li><a href="/admin/banner " data-key="t-add-product">Banner</a></li>
                                 </ul>
                             </li>
 
@@ -581,7 +581,7 @@
                                                     <div class="row">
                                                         <div class="">
                                                             <a href="/admin/Product" class="dropdown-item" data-key="t-products">Products List</a>
-                                                            <a href="/admin/AddProduct" class="dropdown-item" data-key="t-add-product">Add Product</a>
+                                                            <a href="/admin/banner " class="dropdown-item" data-key="t-add-product">Banner</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -708,14 +708,9 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="page-title-box d-flex align-items-center justify-content-between">
-                                    <h4 class="mb-0">User List</h4>
+                                    <h4 class="mb-0">Offer List</h4>
 
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Contacts</a></li>
-                                            <li class="breadcrumb-item active">User List</li>
-                                        </ol>
-                                    </div>
+                                  
 
                                 </div>
                             </div>
@@ -733,17 +728,7 @@
                                                 </div>
                                             </div>
                 
-                                            <div class="col-md-6">
-                                                <div class="form-inline float-md-end mb-3">
-                                                    <div class="search-box ms-2">
-                                                        <div class="position-relative">
-                                                            <input type="text" class="form-control rounded bg-light border-0" placeholder="Search...">
-                                                            <i class="mdi mdi-magnify search-icon"></i>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
+                                 
                 
                 
                                         </div>
@@ -761,7 +746,7 @@
                                                 </thead>
                                                 <tbody>
                                               <% offer.forEach((Offer)=>{ %>
-                                                    <tr>
+                                                    <tr id="Remove<%=Offer._id  %>">
                                                        
                                                         <td>
                                                           <%=Offer.name %>
@@ -779,7 +764,7 @@
                                                  
                                                  
                                                     </button></td>
-                                                    <td> <a href=""> <button type="button" class="btn btn-danger waves-effect waves-light " style="width: 50px;height: 40px;">
+                                                    <td> <a onclick="remove('<%=Offer._id%>')"> <button type="button" class="btn btn-danger waves-effect waves-light " style="width: 50px;height: 40px;">
                                                       <i class="mdi mdi-trash-can d-block font-size-4"></i>
                                                   </button> </a> </td>
                                                     </tr>
@@ -788,34 +773,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="row mt-4">
-                                            <div class="col-sm-6">
-                                                <div>
-                                                    <p class="mb-sm-0">Showing 1 to 10 of 12 entries</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="float-sm-end">
-                                                    <ul class="pagination mb-sm-0">
-                                                        <li class="page-item disabled">
-                                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                                        </li>
-                                                        <li class="page-item active">
-                                                            <a href="#" class="page-link">1</a>
-                                                        </li>
-                                                        <li class="page-item ">
-                                                            <a href="#" class="page-link">2</a>
-                                                        </li>
-                                                        <li class="page-item">
-                                                            <a href="#" class="page-link">3</a>
-                                                        </li>
-                                                        <li class="page-item">
-                                                            <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                  
                                     </div>
                                 </div>
                             </div>
@@ -841,7 +799,20 @@
         <script src="assets/js/app.js"></script>
 
 
-    
+        <script>
+            function remove(ID){
+                console.log(ID)
+                const Remove=document.getElementById('Remove'+ID)
+                fetch('/admin/offerDelete', {
+                        method: "post",
+                            headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ID})
+                    })
+                    Remove.remove()
+            }
+        </script>
 
 
     </body>

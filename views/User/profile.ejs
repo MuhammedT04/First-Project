@@ -217,7 +217,7 @@
                                         <a class="nav-link" id="tab-downloads-link" data-toggle="tab" href="#tab-downloads" role="tab" aria-controls="tab-downloads" aria-selected="false">Change Password</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Adresses</a>
+                                        <a class="nav-link" id="tab-address-link" data-toggle="tab" href="#tab-address" role="tab" aria-controls="tab-address" aria-selected="false">Address</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="tab-account-link" data-toggle="tab" href="#tab-account" role="tab" aria-controls="tab-account" aria-selected="false">Wallet</a>
@@ -233,7 +233,15 @@
                                     </li>
                                 </ul>
                             </aside><!-- End .col-lg-3 -->
-            
+            <style>
+				.nav-item{
+					background-color: #F6F6F6;
+					
+				}
+				.nav-link{
+					background-color:white;
+				}
+			</style>
                             <div class="col-md-8 col-lg-9">
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active user-profile" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link ">
@@ -352,7 +360,7 @@
 												<div class="row mb-5 ">
 												<div class="d-flex align-items-start border-bottom pb-3 col-md-4">
 													<div class="me-4">
-														<a href="/myOrder?id=<%=orde._id %>"><img src="/ImageData/<%=orde.productId.image[0]%>" height="60" width="100" alt="" class="avatar-lg"></a>
+														<a href="/myOrder?id=<%=orde._id %>"><img src="/ImageData/<%=orde.productId.image[0]%>" height="100" width="100" alt="" class="avatar-lg"></a>
 													</div>
 													
 												
@@ -434,8 +442,8 @@
 												</div>
 												<input type="password" name="confirmPass" placeholder="confirm password" id="confirmPassword" required>
 											</div>
-											<div>
-												<input type="submit" value="save">
+											<div class="justify-content-center d-flex">
+												<input type="submit" value="save" style="background-color: rgb(39, 38, 38);width: 5rem;color: white;height: 2rem;border-radius: 20px;">
 											</div>
 											</form>
 										</div>
@@ -449,6 +457,14 @@
 										</div>
 
 										<% add.forEach((add)=>{%>
+											<% if(add.address.length==0){ %>
+												<div class="d-flex justify-content-center align-items-center h-75">
+													<div>
+												<img src="/image/nothing.png" alt="">
+											
+													</div>
+												  </div>
+												<% }else{ %>
 											<% for(let i=0;i<add.address.length;i++){ %>
 										<div  id="delet<%= add.address[i]._id%>" class="fullAdd d-flex justify-content-center p-3  ">
 											<div class="addressDe p-3 ">
@@ -480,6 +496,7 @@
 												</div>
 											</div>
 										</div>
+										<% } %>
 										<% } %>
 										<% })  %>
 										</div>
@@ -526,13 +543,14 @@
 														</tr>
 													</thead>
 														<tbody>
-															<% wallet?.transaction.forEach((Data)=>{ %>
-														<tr>
-															<td><%=Data.creditOrDebit %></td>
-															<td>₹ <%=Data.amount %></td>
-															<td><%=Data.date.toLocaleDateString() %></td>
-														</tr>
-														<% }) %>
+															<% let sortedTransactions = wallet?.transaction.sort((a, b) => b.date - a.date); %>
+															<% sortedTransactions.forEach((Data) => { %>
+															  <tr>
+																<td><%= Data.creditOrDebit %></td>
+																<td>₹ <%= Data.amount %></td>
+																<td><%= Data.date.toLocaleDateString() %></td>
+															  </tr>
+															<% }) %>															
 													</tbody>
 												</table>
 														</div>
@@ -550,37 +568,63 @@
 											</div>
 											<br>
 											<div class="row">
-
-								
-											<% couponlist?.coupons?.forEach((Data)=>{ %>
-											
+												
+												<% if(couponlist.coupons.length==0){ %>
+													<div class="d-flex justify-content-center align-items-center h-75">
+														<div>
+													<img src="/image/nothing.png" alt="">
+												
+														</div>
+													  </div>
+													<% }else{ %>
+												<% couponlist?.coupons?.forEach((Data)=>{ %>
+													
 													
 											<div class="col-lg-4 ">
 												<div class="card" style="box-shadow:1px 1px 8px 0px #888888;">
-													<img class="card-img img-fluid" src="/ImageData/<%=Data?.couponId?.image%>" alt="Card image">
+													<img class="card-img img-fluid" src="<%=Data?.couponId?.image%>" alt="Card image">
 													<div class="card-img-overlay">
 														<h5 class="card-title text-dark "><%=Data.couponId.name %></h5>
 														<div class=" ">
 															<h2 class="text-dark" style="font-size: 20px;"><%=Data.couponId.offer %>%</h2>
 														</div>
-															<p class="card-text text-dark   ">Code:<%=Data.code %></p>
+														<% if(Data.couponStatus==="Claimed"){ %>
+															<span class="card-text text-dark">
+																 <span class="text-danger"	>Claimed</span>
+															</span>
+														
+														<% }else{ %>
+																<p class="card-text text-dark" id="couponCode" onclick="copyCoupon()" style="cursor: pointer;">
+																	Code: <span><%=Data.code %></span>
+																</p>
+
+															<% } %>
 															<p class="card-text text-dark" style="font-size: 10px;">Valid Till: <%=Data.expiryDate.toLocaleDateString()%></p>
 															<p class="card-text text-dark"  style="font-size: 10px;"> <%=Data.couponId.description%></p>
 													
 													</div>
 												</div>
 											</div>
-										
 											<% }) %>
+											<% } %>
+
 										</div>
 										</div>
 
 										<div class="tab-pane fade" id="tab-Wishlist" role="tabpane" aria-labelledby="tab-Wishlist-link">
 								
-                                                 <div>
-													<div class="row">
-														
-														<% wishlists?.products?.forEach((wish)=>{ %>
+											<div class="row">
+												<% if(wishlists.products.length == 0) { %>
+													<div style="height: 80vh;">
+													  <div class="d-flex justify-content-center align-items-center h-100">
+														<div>
+													<img src="/image/em.png" alt="">
+												
+														</div>
+													  </div>
+													</div>
+													<% } %>
+												<% wishlists?.products?.forEach((wish)=>{ %>
 														<div class="col-lg-4" id="remove<%=wish.productId._id%>">
 														
 															<div class="w-100 h-25 ">
@@ -590,12 +634,17 @@
 																			<div class="product-img">                        
 																				
 																			
-																				<a href="/product?id=<%=wish.productId._id %>"><img src="/ImageData/<%=wish.productId.image[0]%>" height="100" width="100" style="max-width: 100%;" alt="heelloooooo"></a>
+																				<a href="/product?id=<%=wish.productId._id %>"><img src="/ImageData/<%=wish.productId.image[0]%>" height="250" width="100" style="max-width: 100%;" alt="heelloooooo"></a>
 																				<div class="product-action clearfix justify-content-center d-flex ">
 																					<a  data-bs-toggle="tooltip" data-placement="top" onclick="removeWishlist('<%=wish.productId._id%>')" title="Wishlist"><i class="ri-heart-3-fill" style="cursor: pointer;"></i></a>
 																					<!-- <a href="#" data-bs-toggle="modal"  data-bs-target="#productModal" title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>
 																					<a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i class="zmdi zmdi-refresh"></i></a> -->
-																					<a href="cart.html" data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+																					<% if(!wish.productId.quantity==0){ %>
+																						<a onclick="addcart('<%=wish.productId._id%>')" data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus" style="cursor: pointer;"></i></a>
+																						
+																						<% }else{ %>
+																							<a data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i di  class="zmdi zmdi-shopping-cart-plus" style="cursor: pointer;"></i></a>
+																							<% } %>
 																				</div>
 																			</div>
 																			<div class="product-info clearfix">
@@ -705,7 +754,7 @@
 
 		<!-- all js here -->
 
-
+	
 
 
 
@@ -863,11 +912,137 @@ function validate(el,count,schema){
 
 
 
-</script>
 
+
+	function addcart(id) {
+			const quantity = 1
+			fetch('/addtocart', {
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ id, quantity })
+			}).then(res => res.json())
+
+				.then(data => {
+
+					if (data.succ) {
+						cartAction();
+						const Toast = Swal.mixin({
+
+							toast: true,
+							position: "bottom",
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+
+							didOpen: (toast) => {
+								toast.onmouseenter = Swal.stopTimer;
+								toast.onmouseleave = Swal.resumeTimer;
+							}
+						});
+
+						Toast.fire({
+
+							icon: "success",
+							title: "Added TO Cart"
+
+						});
+
+					} else if (data.fail) {
+
+						const Toast = Swal.mixin({
+
+							toast: true,
+							position: "bottom",
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+
+							didOpen: (toast) => {
+
+								toast.onmouseenter = Swal.stopTimer;
+								toast.onmouseleave = Swal.resumeTimer;
+							}
+
+						});
+
+						Toast.fire({
+
+							icon: "warning",
+							title: "Already Added"
+
+						});
+
+					}
+
+
+				})
+		}
+
+
+
+
+
+
+		function copyCoupon() {
+    var couponElement = document.getElementById("couponCode").querySelector("span");
+
+    var tempInput = document.createElement("input");
+    tempInput.value = couponElement.textContent;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    tempInput.setSelectionRange(0, 99999); 
+
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "bottom",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    Toast.fire({
+        icon: "success",
+        title: "Coupon Code copied"
+    });
+}
+
+
+
+</script>
+<style>
+	.swal2-popup{
+		background-color: #ffffff93 !important;
+		box-shadow: 0 0 0 0 black;
+backdrop-filter: blur(1rem) !important;
+border-radius: 12px !important;
+}
+.swal2-success-circular-line-left{
+display: none;
+}
+.swal2-success-circular-line-right{
+display: none;
+}
+.swal2-success-fix{
+display: none;
+}
+.swal2-timer-progress-bar{
+border-radius: 20px;
+background-color: #b79bb263;
+}
+	
+</style>
 <style>
 	.amount{
-	/* box-shadow:1px 1px 1px 8px rgb(219, 211, 211); */
+
 		width: 100%;
 		height: 3rem;
 		border-radius: 10px;

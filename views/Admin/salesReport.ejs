@@ -325,7 +325,7 @@
                                     <li><a href="ecommerce-cart.html" data-key="t-cart">Cart</a></li>
                                     <li><a href="ecommerce-checkout.html" data-key="t-checkout">Checkout</a></li>
                                     <li><a href="ecommerce-shops.html" data-key="t-shops">Shops</a></li>
-                                    <li><a href="ecommerce-add-product.html" data-key="t-add-product">Add Product</a></li>
+                                    <li><a href="ecommerce-add-product.html" data-key="t-add-product">Banner</a></li>
                                 </ul>
                             </li>
 
@@ -582,7 +582,7 @@
                                                     <div class="row">
                                                         <div class="">
                                                             <a href="/admin/Product" class="dropdown-item" data-key="t-products">Products List</a>
-                                                            <a href="/admin/AddProduct" class="dropdown-item" data-key="t-add-product">Add Product</a>
+                                                            <a href="/admin/banner " class="dropdown-item" data-key="t-add-product">Banner</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -750,7 +750,7 @@
                                          </div>
                                         </div>
                 
-                                        <div class="table-responsive">
+                                        <div class="table-responsive" id="dataDiv">
                                             <table class="table align-middle table-nowrap table-check">
                                                 <thead class="table-light">
                                                     <tr>
@@ -809,7 +809,11 @@
                                             <td>Total</td>
                                             <td>₹<%=Total %></td>
                                   
-                                            <td><a href="javascript:window.print()" class="btn btn-success me-1"><i class="fa fa-print"></i></a></td>
+                                            <td><a href="javascript:window.print()" class="btn btn-success me-1"><i class="fa fa-print"></i></a>
+                                                <button type="button" onclick="exportExcel()" class="btn btn-primary" style="width: 3rem;height: 2.3rem;">
+                                                    <i class="mdi mdi-download d-block"></i>
+                                                </button>
+                                            </td>
                                          </tr>
                                                 </tbody>
                                             </table>
@@ -1090,6 +1094,7 @@
 
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
         <!-- JAVASCRIPT -->
         <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -1098,7 +1103,16 @@
         <script src="/assets/libs/feather-icons/feather.min.js"></script>
 
         <script src="assets/js/app.js"></script>
+        <script>
+            function exportExcel(){
+                const table = document.getElementById('dataDiv');
+                const ws = XLSX.utils.table_to_sheet(table);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+                XLSX.writeFile(wb, 'report.xlsx');
+            }
 
+        </script>
 
     </body>
 

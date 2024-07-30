@@ -148,33 +148,12 @@
 									</div>
 									<!-- Color end -->
 									<!-- Size start -->
-									<div class="dropdown floatleft">
-										<button class="option-btn">
-										Size
-										</button>
-										<div class="dropdown-menu dropdown-width" >
-											<!-- Widget-Size start -->
-											<aside class="widget widget-size">
-												<div class="widget-title">
-													<h4>Size</h4>
-												</div>
-												<div class="widget-info size-filter clearfix">
-													<ul>
-														<li><a href="#">M</a></li>
-														<li><a class="active" href="#">S</a></li>
-														<li><a href="#">L</a></li>
-														<li><a href="#">SL</a></li>
-														<li><a href="#">XL</a></li>
-													</ul>
-												</div>
-											</aside>
-											<!-- Widget-Size end -->
-										</div>
+									<div class="">
+										<a href="/shop"><button class="option-btn">Reset</button></a>
+								
 									</div>	
 									<!-- Size end -->								
-									<div class="showing text-end">
-										<p class="mb-0 d-none d-md-block">Showing 01-08 of 17 Results</p>
-									</div>
+								
 								</div>						
 							</div>	
 							<div class="col-md-12">
@@ -210,25 +189,23 @@
 															<span class="">₹<%= data.price %>.00</span>
 															<% } %>
 													
-													<!-- <span class="pro-rating">
-														<a href="#"><i class="zmdi zmdi-star"></i></a>
-														<a href="#"><i class="zmdi zmdi-star"></i></a>
-														<a href="#"><i class="zmdi zmdi-star"></i></a>
-														<a href="#"><i class="zmdi zmdi-star-half"></i></a>
-														<a href="#"><i class="zmdi zmdi-star-half"></i></a>
-													</span> -->
+										
 												</div>
 												<div class="product-action clearfix justify-content-center d-flex ">
+													<% if(locals.user_id){ %>
 													<a onclick="Wishlist('<%=data._id%>',this)" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"> <i class="<%= !locals.wish ? 'ri-heart-3-line' : (locals.wish.products.find(e => e.productId.toString() == data._id.toString()) ? 'ri-heart-3-fill' : 'ri-heart-3-line') %>" style="cursor: pointer;"></i></a>
-													<!-- <a href="#" data-bs-toggle="modal"  data-bs-target="#productModal" title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>
-													<a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i class="zmdi zmdi-refresh"></i></a> -->
+	
 													<% if(!data.quantity==0){ %>
 													<a onclick="addcart('<%=data._id%>')" data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus" style="cursor: pointer;"></i></a>
 													
 													<% }else{ %>
-														<% console.log(data.quantity,'klklklklklkl') %>
 														<a data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i di  class="zmdi zmdi-shopping-cart-plus" style="cursor: pointer;"></i></a>
 														<% } %>
+														<% }else{ %>
+															<a href="/login" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"> <i class="<%= !locals.wish ? 'ri-heart-3-line' : (locals.wish.products.find(e => e.productId.toString() == data._id.toString()) ? 'ri-heart-3-fill' : 'ri-heart-3-line') %>" style="cursor: pointer;"></i></a>
+	
+															<a href="/login" data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i di  class="zmdi zmdi-shopping-cart-plus" style="cursor: pointer;"></i></a>
+															<% } %>
 												</div>
 											</div>
 											
@@ -429,7 +406,7 @@
 				.then(data => {
 
 					if (data.succ) {
-
+						cartAction();
 						const Toast = Swal.mixin({
 
 							toast: true,

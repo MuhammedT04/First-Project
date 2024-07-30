@@ -32,7 +32,7 @@
     router.post('/forget',controllers.EmailChecking)
     router.get('/confirmpassword',controllers.confirm)
     router.post('/confirmPassword',controllers.confirmPassword)
-
+    router.post('/searchHome',controllers.homeSearch)
     
 
 //Profile
@@ -58,7 +58,7 @@ router.get('/cart',auth.login,controllerCart.Cart)
 router.post('/addtocart',controllerCart.cartData)
 router.put('/quantityUpdate',controllerCart.quantityUpdate)
 router.post('/cartDelete',controllerCart.cartremove)
-
+router.post('/cartAction',controllerCart.counts)
 //check Out
 
 router.get('/checkout',auth.login,controllerCart.checkOut)

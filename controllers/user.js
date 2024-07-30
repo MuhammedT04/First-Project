@@ -6,7 +6,7 @@ const category=require('../model/category')
 const Cart=require('../model/cart')
 const Wallet=require('../model/wallet')
 const wishlist=require('../model/wishlist')
-
+const Banner =require('../model/banner')
 
 const generatecode = () => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -104,7 +104,7 @@ const signUpData=async(req,res)=>{
 const login=async(req,res)=>{
     try {
         const msg=req.flash('msg')
-        res.render('User/login',{msg})
+        res.render('User/login',{msg,cartCount:0})
     } catch (error) {
         console.log(error.message) 
     }
@@ -116,7 +116,7 @@ const logindata=async(req,res)=>{
 
         const email=req.body.email
         const emaildata=await model.findOne({email:email})
-        if(emaildata.is_block==true){ 
+        if(emaildata.is_block==true&&emaildata.is_admin==false){ 
             const pass=await bcrypt.compare(req.body.password,emaildata.password)
             if(pass){
                 req.session.user_id=emaildata._id
@@ -141,17 +141,35 @@ const home=async(req,res)=>{
         
         const userss=req.session.user_id
         const productData=await Product.find({status:true}).populate({path:'category', match: { status: true }});
+        const banner=await Banner.find({})
+        
         if(userss){
             const wish = await wishlist.findOne({ UserId: userss })
-            res.render('User/index',{product:productData,User:userss,wish})
+            res.render('User/index',{product:productData,User:userss,wish,banner})
         }else{
-            res.render('User/index',{product:productData})
+         
+            res.render('User/index',{product:productData,banner})
         }
         
     } catch (error) {
         console.log(error.message)
     }
 }
+
+
+
+const homeSearch=async(req,res)=>{
+    try {
+    
+        req.session.homeSearch=req.body.searchHome
+        res.redirect('/shop')
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
 
 //logout
 const logout=async(req,res)=>{
@@ -344,7 +362,7 @@ const SingleProduct=async(req,res)=>{
 
 const shop = async (req, res) => {
     try {
-        
+        const {user_id}=req.session
         const limit = 12;
         const page = parseInt(req.query.page) || 1;
         const skip = (page - 1) * limit;
@@ -384,17 +402,18 @@ const shop = async (req, res) => {
                     { status: true }
                 ]
             }).populate('category').exec();
+          
         }
         if(shopProducts.length===0){
             noItems=true
         }
 
-       
+       req.session.sorts=null
         if (req.session.user_id) {
             const wish = await wishlist.findOne({ UserId: req.session.user_id })
-            res.render("User/shop", { currentPage: page, totalPages, shopProducts ,wish});
+            res.render("User/shop", { currentPage: page, totalPages, shopProducts ,wish,user_id});
         } else {
-            res.render("User/shop", { currentPage: page, totalPages, shopProducts });
+            res.render("User/shop", { currentPage: page, totalPages, shopProducts,user_id });
         }
     } catch (error) {
         console.log(error.message);
@@ -406,16 +425,53 @@ const shop = async (req, res) => {
 
 const lowToHigh = async (req, res) => {
     try {
+        let sortData
         const limit = 8;
         const page = parseInt(req.query.page) || 1;
         const skip = (page - 1) * limit;
-
+        sortData=req.params.id
         const totalProductCount = await Product.countDocuments({ status: true });
         const totalPages = Math.ceil(totalProductCount / limit);
+        if(req.session.sorts){
 
-        const option = req.params.id == 'HighToLow' ? { price: -1 } : req.params.id == 'Alphabetic' ? { name: 1 } : req.params.id == 'LowToHigh' ? { price: 1 } : req.params.id == 'AlphabeticLow' ? { name: -1 } : { name: -1 };
-        const shopProduct = await Product.find({ status: true }).populate({ path: 'category', match: { status: true } }).sort(option).skip(skip).limit(limit);
+            let prices  
+            if(req.params.id=='HighToLow'){
+                prices=-1
+            }else if(req.params.id=='LowToHigh'){
+                prices=1
+            }
+
+            const datas =await Product.aggregate([
+                {
+                    $match: {
+                      status: true,  
+                    },
+                },
+                {
+                  $lookup: { 
+                    from: "categories",
+                    localField: "category",
+                    foreignField: "_id",
+                    as: "category",
+                  },
+                },{
         
+                    $unwind: "$category",
+        
+                },{
+                    $match:{
+                        'category.name': req.session.sorts
+                    }
+                },{$sort:{
+                    price:prices
+                }
+            }
+        ]);
+        res.render("User/shop", {  shopProducts : datas });
+        }
+        const option = sortData == 'HighToLow' ? { offerPrire: -1 } : sortData == 'Alphabetic' ? { name: 1 } : sortData == 'LowToHigh' ? { offerPrire: 1 } : sortData == 'AlphabeticLow' ? { name: -1 } : { name: -1 };
+        const shopProduct = await Product.find({ status: true }).populate({ path: 'category', match: { status: true } }).sort(option).skip(skip).limit(limit);
+        req.session.sorts=sortData
         res.render("User/shop", { shopProducts: shopProduct, totalPages: totalPages, currentPage: page });
     } catch (error) {
         console.error("Error:", error);
@@ -428,31 +484,74 @@ const lowToHigh = async (req, res) => {
 
 const Types=async(req,res)=>{
     try {
-       const data=await Product.aggregate([
-        {
-            $match: {
-              status: true,  
+     
+      
+        if(req.session.sorts){
+            let prices  
+            if(req.session.sorts=='HighToLow'){
+                prices=-1
+            }else if(req.session.sorts=='LowToHigh'){
+                prices=1
+            }
+    
+    const datas =await Product.aggregate([
+            {
+                $match: {
+                  status: true,  
+                },
             },
-        },
-        {
-          $lookup: { 
-            from: "categories",
-            localField: "category",
-            foreignField: "_id",
-            as: "category",
-          },
-        },{
-
-            $unwind: "$category",
-
-        },{
-            $match:{
-                'category.name': req.params.id
+            {
+              $lookup: { 
+                from: "categories",
+                localField: "category",
+                foreignField: "_id",
+                as: "category",
+              },
+            },{
+    
+                $unwind: "$category",
+    
+            },{
+                $match:{
+                    'category.name': req.params.id
+                }
+            },{$sort:{
+                price:prices
             }
         }
-    ]);
+        ]);
 
-        res.render("User/shop", {  shopProducts : data });
+            res.render("User/shop", {shopProducts:datas});
+        }else{
+            const data=await Product.aggregate([
+                {
+                    $match: {
+                      status: true,  
+                    },
+                },
+                {
+                  $lookup: { 
+                    from: "categories",
+                    localField: "category",
+                    foreignField: "_id",
+                    as: "category",
+                  },
+                },{
+        
+                    $unwind: "$category",
+        
+                },{
+                    $match:{
+                        'category.name': req.params.id
+                    }
+                }
+            ]);
+        req.session.sorts=req.params.id
+                res.render("User/shop", {  shopProducts : data });
+        }
+
+        
+
     } catch (error) {
         console.log(error.message)
     }
@@ -586,12 +685,15 @@ const contact=async(req,res)=>{
 
 
 
+
+
 module.exports={
     signUp,
     signUpData,
     login,
     logindata,
     home,
+    homeSearch,
     logout,
     otp,
     otpdata,

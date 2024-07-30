@@ -127,25 +127,14 @@
 										<!-- color start -->
 										<div class="color-filter single-pro-color mb-20 clearfix">
 											<ul>
-												<li><span class="color-title text-capitalize">color</span></li>
-												<li><a class="active" href="#"><span class="color color-1"></span></a>
-												</li>
-												<li><a href="#"><span class="color color-2"></span></a></li>
-												<li><a href="#"><span class="color color-7"></span></a></li>
-												<li><a href="#"><span class="color color-3"></span></a></li>
-												<li><a href="#"><span class="color color-4"></span></a></li>
+									
 											</ul>
 										</div>
 										<!-- color end -->
 										<!-- Size start -->
 										<div class="size-filter single-pro-size mb-35 clearfix">
 											<ul>
-												<li><span class="color-title text-capitalize">size</span></li>
-												<li><a href="#">M</a></li>
-												<li><a class="active" href="#">S</a></li>
-												<li><a href="#">L</a></li>
-												<li><a href="#">SL</a></li>
-												<li><a href="#">XL</a></li>
+									
 											</ul>
 										</div>
 										<!-- Size end -->
@@ -572,7 +561,7 @@
 				.then(data => {
 
 					if (data.succ) {
-
+						cartAction();
 						const Toast = Swal.mixin({
 
 							toast: true,

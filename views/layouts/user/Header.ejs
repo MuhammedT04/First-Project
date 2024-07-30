@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4 offset-md-4 col-7">
-                    <div class="logo text-md-center">
+                    <div class="logo text-md-center" style="display: flex;justify-content: center;">
                         <a href="/"> <img src=" /image/logo.png"  width="100" alt=""> </a>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                             <li>
                                 <a class="cart-icon" href="/cart">
                                     <i class="zmdi zmdi-shopping-cart"></i>
-                                    <span>0</span>
+                                    <span id="count"></span>
                                 </a>
                             
                             </li>
@@ -63,5 +63,21 @@
             </ul>
         </nav>
     </div>
+
+    <script>
+                cartAction();
+
+        function cartAction(){
+
+            const cartt = document.getElementById('count');
+
+            fetch('/cartAction' ,{method : 'post'}).then(res=>res.json()).then((data)=>{
+
+                cartt.textContent = data.success || 0
+
+            });
+
+}
+    </script>
     <!-- MAIN-MENU END -->
 </header>
