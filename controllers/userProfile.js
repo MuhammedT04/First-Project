@@ -92,7 +92,7 @@ const usercancel=async(req,res)=>{
              const check = await order.findOne({UserId: user_id,'products._id':id},{'products.$':1}).populate('products.productId');
              const offer =await order.findOne({OrderId:orderId})
              let productTotal=0
-             productTotal=check.products[0].productId.offerPrire*check.products[0].quantity
+             productTotal=check.products[0].productPrice*check.products[0].quantity
              productTotal=Math.round( productTotal/ 100 * (100 - offer.offer))
              if(check.products[0].ProductStatus=="Canceled"){
                 const findOrderPrice=await order.findOne({OrderId:orderId})
@@ -258,11 +258,11 @@ const Wishlist =async(req,res)=>{
 
     const reason = async (req, res) => {
         try {
-            console.log(req.body,'/////////////|||||||');
+
             req.session.reason=req.body.checked
             req.session.productId=req.body.Id
             req.session.orderId=req.body.orderId
-            console.log(req.session.orderId)
+
              await order.findOneAndUpdate({UserId:req.session.user_id,'products._id':req.body.Id},{$set:{'products.$.ProductStatus':'Return'}},{'products.$':1},{new:true})
             res.redirect('/returnMethod');
         } catch (error) {
@@ -291,7 +291,6 @@ const ReturnMethods=async(req,res)=>{
         req.session.reason=null
         req.session.productId=null
         req.session.orderId=null
-        console.log(accountDate)
         res.redirect('/profile')
     } catch (error) {
         console.log(error.message)
@@ -308,9 +307,7 @@ const invoice=async(req,res)=>{
     try {
         const {id}=req.params
         const {OrderId}=req.query
-        console.log(OrderId,id)
         const invoiceData=await order.findOne({OrderId:OrderId,'products._id':id},{'products.$':1,deliveryAddress:1,orderDate:1,OrderId:1,offer:1}).populate('products.productId')
-        console.log(invoiceData)
         res.render('user/invoice',{invoiceData})
     } catch (error) {
         console.log(error.message)

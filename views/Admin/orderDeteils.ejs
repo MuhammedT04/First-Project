@@ -857,9 +857,9 @@
                                                                 <td><%=order.offer %> %</td>
                                                                 <% } %>
                                                                 <% let total=0 %>
-                                                                <% total=product.productId.offerPrire*product.quantity %>
+                                                                <% total=product.productPrice*product.quantity %>
 
-                                                                <% total=Math.round(product.productId.offerPrire/ 100 * (100 - order.offer))  %>
+                                                                <% total=Math.round(product.productPrice/ 100 * (100 - order.offer))  %>
                                                                 <td><%=total%>.00</td>
                                                                 <td>  
                                                                     <% if(product.ProductStatus==='Canceled'||product.ProductStatus==='Return'){ %>

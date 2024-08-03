@@ -79,9 +79,13 @@ const order = async (req, res) => {
 
         const ADDRESS = await Add.findOne({ UserId: user_id, 'address.status': true }, { 'address.$': 1 });
         const { name, phone, place, pincode, locality, state, city } = ADDRESS?.address?.[0] ?? {};
-        const products = cart.products;
+        // const products = cart.products;
 
-     
+        const products = cart.products.map(product => ({
+            productId: product.productId._id,
+            productPrice: product.productId.offerPrire, 
+            quantity: product.quantity
+        }));
 
         const order = new Orderlist({
             UserId: user_id,
@@ -203,7 +207,6 @@ const productDetails=async(req,res)=>{
 const updateOrderStatus = async (req, res) => {
     try {
         const { orderId, newStatus,ID } = req.body;
-        console.log(ID )
         let expiryDate
         if(newStatus==="Delivered"){
             const currentDate = new Date() 

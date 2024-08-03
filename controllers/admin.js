@@ -187,9 +187,43 @@ const home = async (req, res) => {
         { $limit: 5 }
     ]);
 
+    const bestCategories = await Order.aggregate([
+        { $unwind: '$products' },
+        {
+            $lookup: {
+                from: 'products',
+                localField: 'products.productId',
+                foreignField: '_id',
+                as: 'productDetails'
+            }
+        },
+        { $unwind: '$productDetails' },
+        {
+            $group: {
+                _id: '$productDetails.category',
+                totalQuantity: { $sum: '$products.quantity' }
+            }
+        },
+        { $sort: { totalQuantity: -1 } },
+        { $limit: 10 },
+        {
+            $lookup: {
+                from: 'categories',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'categoryDetails'
+            }
+        },
+        { $unwind: '$categoryDetails' },
+        {
+            $project: {
+                categoryName: '$categoryDetails.name',
+                totalQuantity: 1
+            }
+        }
+    ]);
 
-
-        res.render('admin/index',{Today,Totals,user,array,bestSellingTen,prod,ProductCount,topUsers})
+        res.render('admin/index',{Today,Totals,user,array,bestSellingTen,prod,ProductCount,topUsers,bestCategories})
     } catch (error) {
         console.log(error.message);
     }
@@ -331,7 +365,7 @@ const returnPriceAddWallet=async(req,res)=>{
         const Returns=await Order.findOne({OrderId:orderId,'Return._id':returnId,'products._id':Products},{'products.$':1}).populate('products.productId')
 
         if(ReturnData.Return[0].OrderRequst==="Approved"){
-            let productAndQuantity=Returns.products[0].productId.offerPrire*Returns.products[0].quantity
+            let productAndQuantity=Returns.products[0].productPrice*Returns.products[0].quantity
             let TotalPrice=Math.round( productAndQuantity/ 100 * (100 - ReturnData.offer))
          
              if(ReturnData.Return[0].ReturnMethod==="Wallet"){

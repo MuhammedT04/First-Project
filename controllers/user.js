@@ -158,15 +158,7 @@ const home=async(req,res)=>{
 
 
 
-const homeSearch=async(req,res)=>{
-    try {
-    
-        req.session.homeSearch=req.body.searchHome
-        res.redirect('/shop')
-    } catch (error) {
-        console.log(error.message)
-    }
-}
+
 
 
 
@@ -693,7 +685,6 @@ module.exports={
     login,
     logindata,
     home,
-    homeSearch,
     logout,
     otp,
     otpdata,

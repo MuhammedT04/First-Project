@@ -32,7 +32,7 @@
     router.post('/forget',controllers.EmailChecking)
     router.get('/confirmpassword',controllers.confirm)
     router.post('/confirmPassword',controllers.confirmPassword)
-    router.post('/searchHome',controllers.homeSearch)
+
     
 
 //Profile

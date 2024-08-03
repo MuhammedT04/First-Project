@@ -376,7 +376,7 @@
 															<h5 class="text-truncate "><%=orde.productId.name %></h5>
 															<% let total=0 %>
 												
-															<% total=orde.productId.offerPrire*orde.quantity %>
+															<% total=orde.productPrice*orde.quantity %>
 										
 															<% total=Math.round(total/ 100 * (100 - order.offer)) %>
 	

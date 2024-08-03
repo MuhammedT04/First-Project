@@ -1026,7 +1026,7 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <div class="align-items-center d-flex">
-                                                        <h4 class="card-title mb-0 flex-grow-1">Top Users</h4>
+                                                        <h4 class="card-title mb-0 flex-grow-1">Top Product</h4>
                                                         <div class="flex-shrink-0">
                                                      
                                                         </div>
@@ -1056,10 +1056,12 @@
                                                         </table>
                                                     </div> <!-- enbd table-responsive-->
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                </div>
                            </div>
+                           
                            <div class="col-xl-4">
 
                                <div class="card">
@@ -1103,6 +1105,42 @@
                                </div>
 
                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                 <div class="align-items-center d-flex">
+                                     <h4 class="card-title mb-0 flex-grow-1">Top Category </h4>
+                                     <div class="flex-shrink-0">
+                                    
+                                     </div>
+                                 </div>
+                            </div>
+                            <div class="card-body pt-1">
+
+                                 <div class="table-responsive">
+                                     <table class="table table-centered align-middle table-nowrap mb-0">
+                                       
+                                         <tbody>
+                                           <% console.log(bestCategories,'bestCategoriesbestCategoriesbestCategories'); %>
+                                             <% bestCategories.forEach((Cate)=>{  %>
+                                             <tr>
+                                   
+                                                 <td>
+                                                     <%=Cate.categoryName %>
+                                                 </td>
+                                                 <td>
+                                                     <%=Cate.totalQuantity %>
+                                                 </td>
+                                                 
+                                             </tr>
+
+                                       <% }) %>
+                                             
+                                         </tbody>
+                                     </table>   
+                                 </div> 
+
+                            </div>
                         </div>
 
                         <!-- <div class="row">
