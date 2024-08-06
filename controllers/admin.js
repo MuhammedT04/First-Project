@@ -223,6 +223,7 @@ const home = async (req, res) => {
         }
     ]);
 
+    
         res.render('Admin/index',{Today,Totals,user,array,bestSellingTen,prod,ProductCount,topUsers,bestCategories})
     } catch (error) {
         console.log(error.message);
