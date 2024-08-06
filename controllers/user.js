@@ -644,7 +644,7 @@ const confirmPassword=async(req,res)=>{
 
 const user404=async(req,res)=>{
     try {
-        res.render('user/404')
+        res.render('User/404')
     } catch (error) {
         console.log(error.message)
     }
@@ -657,7 +657,7 @@ const user404=async(req,res)=>{
 
 const Blog=async(req,res)=>{
     try {
-        res.render('user/blog')
+        res.render('User/blog')
     } catch (error) {
         console.log(error.message)
     }
@@ -669,7 +669,7 @@ const Blog=async(req,res)=>{
 
 const contact=async(req,res)=>{
     try {
-        res.render('user/contact')
+        res.render('User/contact')
     } catch (error) {
         console.log(error.message)
     }

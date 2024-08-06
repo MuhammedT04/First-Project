@@ -276,7 +276,7 @@ const Wishlist =async(req,res)=>{
 
 const returnRequest=async(req,res)=>{
     try {
-        res.render('user/returnRequest')
+        res.render('User/returnRequest')
     } catch (error) {
         console.log(error.message)
     }
@@ -308,7 +308,7 @@ const invoice=async(req,res)=>{
         const {id}=req.params
         const {OrderId}=req.query
         const invoiceData=await order.findOne({OrderId:OrderId,'products._id':id},{'products.$':1,deliveryAddress:1,orderDate:1,OrderId:1,offer:1}).populate('products.productId')
-        res.render('user/invoice',{invoiceData})
+        res.render('User/invoice',{invoiceData})
     } catch (error) {
         console.log(error.message)
     }
