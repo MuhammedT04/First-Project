@@ -267,6 +267,7 @@ const blockUser = async (req, res) => {
     try {
 
         const { id } = req.body
+        console.log(id)
         const check = await model.findOne({ _id: id })
         check.is_block = !check.is_block
         check.save()

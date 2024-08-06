@@ -3,6 +3,15 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("./model/user");
 require('dotenv').config();
 
+const generatecode = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 10; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        code+= characters.charAt(randomIndex);
+    }
+    return code;
+};
 
 passport.use(
     new GoogleStrategy(
@@ -25,7 +34,7 @@ passport.use(
                         email: profile._json.email,
                         name,
                         password:googleId,
-               
+                        refferalId:generatecode(),
                         phone:'08958093553'
                     });
                 }
