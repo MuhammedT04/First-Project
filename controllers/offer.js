@@ -7,7 +7,7 @@ const offerList=async(req,res)=>{
     try {
         const offer=await Offer.find({offer:{$gt:0}})
         
-        res.render('admin/OfferList',{offer})
+        res.render('Admin/OfferList',{offer})
     } catch (error) {
         console.log(error.message)
     }
@@ -17,7 +17,7 @@ const offerList=async(req,res)=>{
 const AddOffer=async (req,res)=>{
     try {
         const msg=req.flash('msg')
-        res.render('admin/AddOffer',{msg})
+        res.render('Admin/AddOffer',{msg})
     } catch (error) {
         console.log(error.message)
     }
@@ -56,7 +56,7 @@ const addOfferData=async(req,res)=>{
 const EditOffer=async(req,res)=>{
     try {
         const EditOffers=await Offer.findOne({_id:req.params.id})
-        res.render('admin/EditOffer',{EditOffers})
+        res.render('Admin/EditOffer',{EditOffers})
     } catch (error) {
         console.log(error.message)
     }
@@ -91,7 +91,7 @@ const EditUpdateData=async(req,res)=>{
         req.flash('msg','Offer already exists')
         const Offers=await Offer.findOne({offer:OfferData})
         const msg=req.flash('msg')
-        res.render('admin/EditOffer',{EditOffers:Offers,msg})
+        res.render('Admin/EditOffer',{EditOffers:Offers,msg})
       }
         
         

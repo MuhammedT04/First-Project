@@ -181,7 +181,7 @@ const adminOrder=async(req,res)=>{
         const totalProductCount = await Orderlist.countDocuments();
         const totalPages = Math.ceil(totalProductCount / limit);
         const orderad=await Orderlist.find().populate('products.productId').sort({ orderDate: -1 }).skip(skip).limit(limit)
-        res.render('admin/orderList',{list:orderad,currentPage: page, totalPages})
+        res.render('Admin/orderList',{list:orderad,currentPage: page, totalPages})
     } catch (error) {
         console.log(error.message)
     }

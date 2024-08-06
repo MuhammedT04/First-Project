@@ -21,7 +21,7 @@ const salesList=async(req,res)=>{
                         $lte: end
                     }
                 });
-                res.render('admin/salesReport', { Today });
+                res.render('Admin/salesReport', { Today });
                 break;
             
             case 'Weekly':
@@ -34,7 +34,7 @@ const salesList=async(req,res)=>{
                         $lte:day
                     }
                 })
-                res.render('admin/salesReport',{Today:weeklyOrders})
+                res.render('Admin/salesReport',{Today:weeklyOrders})
                 break;
                 case 'Monthly':
                     const Daily= new Date()
@@ -46,7 +46,7 @@ const salesList=async(req,res)=>{
                             $lte:Daily
                         }
                     })
-                    res.render('admin/salesReport',{Today:monthly})
+                    res.render('Admin/salesReport',{Today:monthly})
                     break;
 
             case 'Yearly':
@@ -60,7 +60,7 @@ const salesList=async(req,res)=>{
                     $lte:Day
                 }
             })
-              res.render('admin/salesReport',{Today:YearlyOrders})
+              res.render('Admin/salesReport',{Today:YearlyOrders})
                 break;
             default:
                 console.log('Sorry, we do not recognize that fruit.');
@@ -85,7 +85,7 @@ const customDate=async(req,res)=>{
             $lte:end
         }
     })
-      res.render('admin/salesReport',{Today:custom})
+      res.render('Admin/salesReport',{Today:custom})
     } catch (error) {
         console.log(error.message)
     }
@@ -150,7 +150,7 @@ const ledgerBook = async (req, res) => {
         const totalPages = Math.ceil(totalProductCount / limit);
         const orders = await Order.find({ 'products.ProductStatus': 'Delivered' }).skip(skip).limit(limit)
 
-        res.render('admin/ledgerBook', {currentPage: page, totalPages, orders })
+        res.render('Admin/ledgerBook', {currentPage: page, totalPages, orders })
     } catch (error) {
         console.log(error.message);
     }

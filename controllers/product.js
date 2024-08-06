@@ -161,7 +161,7 @@ const banner=async(req,res)=>{
     try {
         const bannerlist=await Banner.find({})
         
-        res.render('admin/Banner',{bannerlist})
+        res.render('Admin/Banner',{bannerlist})
     } catch (error) {
         console.log(error.message)
     }
@@ -174,7 +174,7 @@ const EditBanner=async(req,res)=>{
     try {
         const ID=req.query.id
         const Data=await Banner.findOne({_id:ID})
-        res.render('admin/EditBanner',{Data})
+        res.render('Admin/EditBanner',{Data})
     } catch (error) {
         console.log(error.message)
     }

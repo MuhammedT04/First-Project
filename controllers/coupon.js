@@ -76,7 +76,7 @@ const AddCouponData=async(req,res)=>{
 const EditCoupon=async(req,res)=>{
     try {
         const editData=await coupon.findOne({_id:req.params.id})
-        res.render('admin/EditCoupon',{editData})
+        res.render('Admin/EditCoupon',{editData})
     } catch (error) {
         console.log(error.message)
     }

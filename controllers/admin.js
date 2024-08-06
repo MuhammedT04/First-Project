@@ -223,7 +223,7 @@ const home = async (req, res) => {
         }
     ]);
 
-        res.render('admin/index',{Today,Totals,user,array,bestSellingTen,prod,ProductCount,topUsers,bestCategories})
+        res.render('Admin/index',{Today,Totals,user,array,bestSellingTen,prod,ProductCount,topUsers,bestCategories})
     } catch (error) {
         console.log(error.message);
     }
@@ -253,7 +253,7 @@ const userList = async (req, res) => {
         const totalPages = Math.ceil(totalProductCount / limit);
 
         const userdata = await model.find({ is_admin: false }).skip(skip).limit(limit)
-        res.render('admin/userdata', { userdata: userdata, currentPage: page, totalPages })
+        res.render('Admin/userdata', { userdata: userdata, currentPage: page, totalPages })
     } catch (error) {
         console.log(error.message);
     }
@@ -345,7 +345,7 @@ const returns = async (req, res) => {
             })
            
         })
-        res.render('admin/Return', { orderList: arr });
+        res.render('Admin/Return', { orderList: arr });
     } catch (er) {
         console.log(er.message)
     }
