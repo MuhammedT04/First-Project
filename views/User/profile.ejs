@@ -544,7 +544,7 @@
 													</thead>
 														<tbody>
 															<% let sortedTransactions = wallet?.transaction.sort((a, b) => b.date - a.date); %>
-															<% sortedTransactions.forEach((Data) => { %>
+															<% sortedTransactions?.forEach((Data) => { %>
 															  <tr>
 																<td><%= Data.creditOrDebit %></td>
 																<td>₹ <%= Data.amount %></td>
