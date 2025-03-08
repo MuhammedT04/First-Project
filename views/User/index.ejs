@@ -72,10 +72,10 @@
 					<div class="slider-area">
 						<% banner.forEach((da)=>{ %>
 							<% if(da.bannerPlace=="Top Banner"){ %>
-								<div class="bend niceties preview-2">
-									<div id="ensign-nivoslider" class="slides">
+								<div style="border-radius: 15px;" class="bend niceties preview-2">
+									<div style="border-radius: 15px;" id="ensign-nivoslider" class="slides">
 										<!-- <img src="/image/photo4.jpg" height="100" width="100" alt="" title="#slider-direction-1"  /> -->
-										<img src="/ImageData/<%=da.image %>" height="100" width="100" alt="" title="#slider-direction-2"  />
+										<img style="border-radius: 15px;" src="/ImageData/<%=da.image %>" height="100" width="100" alt="" title="#slider-direction-2"  />
 									</div>
 
 							<div id="slider-direction-2" class="slider-direction">
@@ -171,13 +171,13 @@
 								<% for (let i = 0; i < locals.product.length; i++) { %>
 									<% if (product[i].category  && product[i].name === "HOODIE") { %>
 										<!-- Single-product start -->
-										<div class="single-product">
-											<div class="product-img">                        
+										<div style="border-radius: 15px;" class="single-product">
+											<div style="border-radius: 15px;" class="product-img">                        
 												
 												<% if(product[i].quantity==0){ %>
 													  <span class="pro-label new-label">Sold Out</span>
 													<% } %>
-												<a href="/product?id=<%= product[i]._id %>"><img src="/ImageData/<%= product[i].image[0] %>"  /></a>
+												<a href="/product?id=<%= product[i]._id %>"><img style="border-radius: 15px;" src="/ImageData/<%= product[i].image[0] %>"  /></a>
 												<div class="product-action clearfix justify-content-center d-flex ">
 												
 
@@ -240,7 +240,7 @@
 							<!-- single-discount-product start -->
 							<div class="col-lg-12">
 								<div class="discount-product">
-									<img src="/ImageData/<%=banners.image %>" height="650" width="1300" alt="" />
+									<img style="border-radius: 15px;" src="/ImageData/<%=banners.image %>" height="650" width="1300" alt="" />
 									<div class="discount-img-brief d-flex justify-content-center">
 										
 										<div class="discount-info">
@@ -288,13 +288,13 @@
 										
 										<% for (let i = 0; i < locals.product.length; i++) { %>
 											<% if (product[i].category && product[i].category.name === "MEN") { %>
-												<div class="single-product col-xl-3 col-lg-4 col-md-6">
-													<div class="product-img">
+												<div style="border-radius: 15px;" class="single-product col-xl-3 col-lg-4 col-md-6">
+													<div style="border-radius: 15px;" class="product-img">
 														<% if(product[i].quantity==0){ %>
 															<span class="pro-label new-label">Sold Out</span>
 															<% } %>
-														<a href="/product?id=<%= product[i]._id %>"><img src="/ImageData/<%= product[i].image[3] %>" alt="" /></a>
-														<div class="product-action clearfix justify-content-center d-flex ">
+														<a href="/product?id=<%= product[i]._id %>"><img style="border-radius: 15px;" src="/ImageData/<%= product[i].image[3] %>" alt="" /></a>
+														<div style="border-radius: 15px;" class="product-action clearfix justify-content-center d-flex ">
 															<% if(locals.User){ %>
 															<a  onclick="Wishlist('<%=product[i]._id%>',this)" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"> <i class="<%= !locals.wish ? 'ri-heart-3-line' : (locals.wish.products.find(e => e.productId.toString() == product[i]._id.toString()) ? 'ri-heart-3-fill' : 'ri-heart-3-line') %>" style="cursor: pointer;"></i></a>
 										
@@ -351,16 +351,16 @@
 										
 										<% for (let i = 0; i < locals.product.length; i++) { %>
 											<% if (product[i].category && product[i].category.name === "WOMEN") { %>
-												<div class="single-product col-xl-3 col-lg-4 col-md-6">
-													<div class="product-img">
-														<div>
+												<div style="border-radius: 15px !important;" class="single-product col-xl-3 col-lg-4 col-md-6">
+													<div style="border-radius: 15px;" class="product-img">
+														<div style="border-radius: 15px;">
 
 															<% if(product[i].quantity==0){ %>
-																<span class="pro-label new-label">Sold Out</span>
+																<span  class="pro-label new-label">Sold Out</span>
 																<% } %>
-															<a href="/product?id=<%= product[i]._id %>"><img src="/ImageData/<%= product[i].image[0] %>" alt="" /></a>
+															<a href="/product?id=<%= product[i]._id %>"><img style="border-radius: 15px;" src="/ImageData/<%= product[i].image[0] %>" alt="" /></a>
 														</div>
-														<div class="product-action clearfix justify-content-center d-flex ">
+														<div style="border-radius: 15px;" class="product-action clearfix justify-content-center d-flex ">
 															<% if(locals.User){ %>
 																<a  onclick="Wishlist('<%=product[i]._id%>',this)" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"> <i class="<%= !locals.wish ? 'ri-heart-3-line' : (locals.wish.products.find(e => e.productId.toString() == product[i]._id.toString()) ? 'ri-heart-3-fill' : 'ri-heart-3-line') %>" style="cursor: pointer;"></i></a>
 											
@@ -440,7 +440,7 @@
 								<div class="modal-product">
 									<div class="product-images">
 										<div class="main-image images">
-											<img alt="#" src="img/product/quickview-photo.jpg"/>
+											<img style="border-radius: 15px;" alt="#" src="img/product/quickview-photo.jpg"/>
 										</div>
 									</div><!-- .product-images -->
 
