@@ -18,7 +18,7 @@ passport.use(
         {
             clientID: process.env.CLIENTID,
             clientSecret: process.env.CLIENT_SECRET,
-            callbackURL: "https://slayfit.site/auth/google/callback",
+            callbackURL: "https://first-project-alfr.onrender.com/auth/google/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
